@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fly Away | Beetleweight Combat Robot</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg: #fcf9f2;
+            --panel: #fefcf7;
+            --text: #1e2a25;
+            --muted: #071024;
+            --line: #dce5e0;
+            --accent: #ffae00;
+            --pink: #f86cc9;
+            --blue: #5ba3d9;
+            --blue-glow: rgba(91, 163, 217, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Inter", sans-serif;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 72px;
+            padding: 0 6vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            background: rgba(252, 249, 242, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 2px solid var(--line);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.8rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* PROJECT DETAIL */
+        .project-detail {
+            padding: 120px 6vw 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .project-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .project-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.8rem;
+        }
+
+        h1 {
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.2rem;
+            max-width: 750px;
+        }
+
+        /* HERO IMAGE CONTAINER */
+        .image-placeholder.hero-img {
+            width: 100%;
+            max-width: 1000px;
+            height: auto;
+            max-height: 550px;
+            margin: 1.5rem auto 2.5rem;
+            background: transparent;
+            border: none;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .image-placeholder.hero-img img {
+            width: 100%;
+            height: 100%;
+            max-height: 550px;
+            object-fit: contain;
+            display: block;
+            border-radius: 16px;
+        }
+
+        /* GRID LAYOUTS FOR PHOTO SECTIONS */
+        .image-grid {
+            display: grid;
+            gap: 1.25rem;
+            margin: 1.5rem 0 2.5rem;
+            width: 100%;
+        }
+
+        /* Version 1 Layout (2 top, 1 bottom full width) */
+        .image-grid.v1-grid {
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+                "top1 top2"
+                "bottom bottom";
+        }
+
+        .v1-grid > *:nth-child(1) { grid-area: top1; }
+        .v1-grid > *:nth-child(2) { grid-area: top2; }
+        .v1-grid > *:nth-child(3) { grid-area: bottom; }
+
+        /* Version 2 Layout (2 side-by-side) */
+        .image-grid.v2-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* Video Section Layout (2 top, 1 bottom full width) */
+        .image-grid.video-grid {
+            grid-template-columns: 1fr 1fr;
+            grid-template-areas:
+                "v1 v2"
+                "v3 v3";
+        }
+
+        .video-grid > *:nth-child(1) { grid-area: v1; }
+        .video-grid > *:nth-child(2) { grid-area: v2; }
+        .video-grid > *:nth-child(3) { grid-area: v3; }
+
+        /* GRID IMAGE CONTAINERS */
+        .image-placeholder.grid-img {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            min-height: auto;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-placeholder.grid-img img {
+            width: 100%;
+            height: auto;
+            max-height: 450px;
+            object-fit: contain;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* VIDEO CONTAINER STYLING */
+        .video-wrapper {
+            width: 100%;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: auto;
+            max-height: 450px;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* CONTENT SECTIONS */
+        .section-block {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-block h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--line);
+        }
+
+        .section-block h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--blue);
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        .section-block p {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .section-block ul {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-block ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* MATERIALS TABLE */
+        .materials-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            background: var(--panel);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid var(--line);
+        }
+
+        .materials-table th, .materials-table td {
+            padding: 0.9rem 1.2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--line);
+            font-size: 0.95rem;
+        }
+
+        .materials-table th {
+            background: rgba(91, 163, 217, 0.1);
+            color: var(--text);
+            font-weight: 700;
+        }
+
+        .materials-table td strong {
+            color: var(--blue);
+        }
+
+        .navigation-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--line);
+        }
+
+        @media (max-width: 600px) {
+            .image-grid.v1-grid,
+            .image-grid.v2-grid,
+            .image-grid.video-grid {
+                grid-template-columns: 1fr;
+                grid-template-areas: none;
+            }
+            .v1-grid > *, .video-grid > * {
+                grid-area: auto !important;
+            }
+            .navigation-links {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <div class="logo">AS<span>.</span></div>
+        <div class="nav-links">
+            <a href="index.html#">Home</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="index.html#skills">Skills</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="project-detail">
+
+        <a href="index.html#projects" class="back-link">← Back to all projects</a>
+
+        <!-- Header -->
+        <div class="project-header">
+            <div class="project-tag">Mechanical · Robotics</div>
+            <h1>Fly Away: <span style="color: var(--blue);">3lb Combat Lifter</span></h1>
+            <p class="subtitle">A 3lb (beetleweight) control robot built for BotBrawl combat robotics competitions, utilizing a custom crank-and-rocker four-bar linkage mechanism.</p>
+        </div>
+
+        <!-- HERO IMAGE -->
+        <div class="image-placeholder hero-img">
+            <img src="Pictures/FA/FA_Arena.jpeg" alt="Main Assembly CAD Render of Fly Away Version 2">
+        </div>
+
+        <!-- Motivation & Strategy -->
+        <div class="section-block">
+            <h2>Motivation &amp; Strategy</h2>
+            <p>
+                Joining the University of Waterloo BattleBots design team (WATBOT) provided a hands-on opportunity to execute a full mechanical hardware lifecycle under strict weight and space constraints.
+            </p>
+            <p>
+                In <strong>BotBrawl</strong> (Canada's robot fighting league), matches are judged on damage, control, and aggression. <em>Fly Away</em> was designed explicitly as a <strong>control bot</strong>. The core strategy is to dominate control points by pinning opponents against walls or stranding them, using an active lifting arm to neutralize their weapons and control ring position.
+            </p>
+        </div>
+
+        <!-- Design Iterations -->
+        <div class="section-block">
+            <h2>Design Iterations</h2>
+
+            <!-- VERSION 1 -->
+            <h3>Version 1: Snail Cam &amp; Extension Springs</h3>
+            <p>
+                The initial version attempted to store energy using a snail cam mechanism paired with heavy extension springs, aimed at launching opponents into the air.
+            </p>
+            
+            <div class="image-grid v1-grid">
+                <div class="image-placeholder grid-img">
+                    <img src="Pictures/FA/FA_V1_CAD.png" alt="V1 CAD Assembly">
+                </div>
+                <div class="image-placeholder grid-img">
+                    <img src="Pictures/FA/FA_V1_Wedge.png" alt="V1 Built Prototype">
+                </div>
+                <div class="image-placeholder grid-img">
+                    <img src="Pictures/FA/FA_V1_ideas_sketch.jpg" alt="V1 Cam Kinematic Diagram Sketch">
+                </div>
+            </div>
+
+            <ul>
+                <li><strong>Mechanism failure:</strong> Material deformation and improper component placement caused the spring to pull the entire flipper structure upward rather than releasing kinetic energy through the arm.</li>
+                <li><strong>Anime North 2026:</strong> Due to a tight 2-week manufacturing timeline, tolerance stack-up on the cam and over-stiff springs prevented proper deployment. The weapon was removed hours before the competition, converting the bot into a static wedge to gain driver experience.</li>
+            </ul>
+
+            <!-- VERSION 2 -->
+            <h3>Version 2: Crank-Rocker Linkage (Current)</h3>
+            <p>
+                The design transitioned from a flipper to a high-torque <strong>crank-and-rocker four-bar linkage lifter</strong>. Linkage kinematic simulation software was used to tune arm ratios to maximize lifting height and mechanical advantage.
+            </p>
+
+            <div class="image-grid v2-grid">
+                <div class="image-placeholder grid-img">
+                    <img src="Pictures/FA/FA_V2_ideas_sketch.jpg" alt="V2 Gear Linkage Mechanism CAD">
+                </div>
+                <div class="image-placeholder grid-img">
+                    <img src="Pictures/FA/FA_Wedge.png" alt="V2 Four-Bar Kinematic Simulation Trace">
+                </div>
+            </div>
+
+            <ul>
+                <li><strong>Modular Attachments:</strong> Implemented interchangeable front attachments: forks for vertical spinner opponents, and wedges for horizontal spinners to prevent weapon damage.</li>
+                <li><strong>Gear Reductions:</strong> Driven by a dedicated high-torque gear motor mated with a 1:2 spur gear reduction to clear internal chassis geometry.</li>
+                <li><strong>Drive &amp; Geometry:</strong> Shifted to rear-wheel drive with extended front caster wheels to prevent tipping forward when lifting 3lb opponents.</li>
+            </ul>
+        </div>
+
+        <!-- Material Selection & Fabrication -->
+        <div class="section-block">
+            <h2>Material Selection &amp; Architecture</h2>
+            <p>
+                Materials were specifically chosen to balance severe weight constraints with structural impact resistance against high-speed spinning weapons:
+            </p>
+
+            <table class="materials-table">
+                <thead>
+                    <tr>
+                        <th>Subsystem Component</th>
+                        <th>Material Selection</th>
+                        <th>Design Rationale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Outer Shell &amp; Wedges</td>
+                        <td><strong>TPU (Thermoplastic Polyurethane)</strong></td>
+                        <td>High impact absorption, flexibility, and crack resistance against weapon hits.</td>
+                    </tr>
+                    <tr>
+                        <td>Bottom Plate</td>
+                        <td><strong>Carbon Fiber</strong></td>
+                        <td>Provides extreme rigidity and structural strength at minimal weight.</td>
+                    </tr>
+                    <tr>
+                        <td>Top Plate</td>
+                        <td><strong>Tegris Woven Composite</strong></td>
+                        <td>Lightweight, highly impact-resistant armor protecting top electronics.</td>
+                    </tr>
+                    <tr>
+                        <td>Flipper Uprights</td>
+                        <td><strong>UHMW Polyethylene</strong></td>
+                        <td>Slick, rigid material supporting high-stress arm pivot points.</td>
+                    </tr>
+                    <tr>
+                        <td>Inner Supports &amp; Mounts</td>
+                        <td><strong>ABS / Super PLA+</strong></td>
+                        <td>Dimensional stability and customizable 3D printed geometry.</td>
+                    </tr>
+                    <tr>
+                        <td>Arms &amp; Forks</td>
+                        <td><strong>Aluminum / AISI 304 Stainless</strong></td>
+                        <td>High strength-to-weight ratio for primary load-bearing linkage arms.</td>
+                    </tr>
+                    <tr>
+                        <td>Wedge Plate</td>
+                        <td><strong>Ti-6Al-4V Titanium</strong></td>
+                        <td>Exceptional hardness and strength-to-weight ratio to deflect low blades.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Key Engineering Learnings -->
+        <div class="section-block">
+            <h2>Key Learnings &amp; Competition Results</h2>
+            <p>
+                Competing at the <strong>BotBrawl Summer Classics</strong> validated the overall mechanical improvements, while exposing critical areas for future iteration:
+            </p>
+            <ul>
+                <li><strong>Design for Serviceability (DFM/DFA):</strong> Version 1 required a hyper-specific teardown sequence. Version 2 reduced top-plate hardware by 66%, featured quick-snap side armor, and an independently removable lifter cassette.</li>
+                <li><strong>Wire Management:</strong> Embedded dedicated internal wire routing paths into CAD to prevent loose cables from snapping solder joints during high-G impacts.</li>
+                <li><strong>Identified Failure Modes:</strong> Lack of an inverted self-righting mechanism remains a vulnerability when flipped. Bluetooth latency via ESP32 control showed a need to transition to standard 2.4GHz RC protocols.</li>
+            </ul>
+        </div>
+
+        <!-- Action Videos -->
+        <div class="section-block">
+            <h2>Fly Away Action Videos</h2>
+            <div class="image-grid video-grid">
+                <div class="video-wrapper">
+                    <video controls preload="metadata">
+                        <source src="Pictures/FA/FA_BOTDF.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="video-wrapper">
+                    <video controls preload="metadata">
+                        <source src="Pictures/FA/FA_HN.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+                <div class="video-wrapper">
+                    <video controls preload="metadata">
+                        <source src="Pictures/FA/FA_Spinny.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="navigation-links">
+            <a href="index.html#projects">← Back to all projects</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

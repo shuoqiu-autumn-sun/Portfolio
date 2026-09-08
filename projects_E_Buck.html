@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>48V to 12V Buck Converter | Autumn Sun</title>
+
+    <!-- KaTeX CSS & JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body, {
+            delimiters: [
+                {left: '$$', right: '$$', display: true},
+                {left: '$', right: '$', display: false}
+            ]
+        });"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg: #fcf9f2;
+            --panel: #fefcf7;
+            --text: #1e2a25;
+            --muted: #071024;
+            --line: #dce5e0;
+            --accent: #ffae00;
+            --pink: #f86cc9;
+            --blue: #5ba3d9;
+            --blue-glow: rgba(91, 163, 217, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Inter", sans-serif;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 72px;
+            padding: 0 6vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            background: rgba(252, 249, 242, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        nav.scrolled {
+            border-bottom-color: var(--line);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.8rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        /* PROJECT DETAIL */
+        .project-detail {
+            padding: 120px 6vw 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .project-header {
+            margin-bottom: 1.5rem;
+        }
+
+        .project-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.8rem;
+        }
+
+        h1 {
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.15;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 750px;
+            margin-bottom: 1.5rem;
+        }
+
+        /* HERO IMAGE CONTAINER (CLEAN, NO OUTLINES) */
+        .image-placeholder.hero-img {
+            width: 100%;
+            max-width: 1000px;
+            height: auto;
+            max-height: 500px;
+            margin: 0 auto 2.5rem;
+            background: transparent;
+            border: none;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-placeholder.hero-img img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
+            display: block;
+            border-radius: 8px;
+        }
+
+        /* SCHEMATIC IMAGE CONTAINER (SLIGHTLY LARGER) */
+        .img-container {
+            text-align: center;
+            margin: 2rem 0;
+            background: transparent;
+            border: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .img-container.schematic-img img {
+            max-width: 100%;
+            height: auto;
+            max-height: 600px; /* Made slightly larger */
+            object-fit: contain;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* BOTTOM 3 IMAGES SIDE-BY-SIDE GRID */
+        .bottom-image-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+            margin: 2rem 0;
+            width: 100%;
+        }
+
+        .grid-img-wrapper {
+            background: transparent;
+            border: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .grid-img-wrapper img {
+            width: 100%;
+            height: auto;
+            max-height: 380px;
+            object-fit: contain;
+            border-radius: 8px;
+            display: block;
+        }
+
+        /* CONTENT SECTIONS */
+        .intro-text {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .section-block {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-block h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--line);
+        }
+
+        .section-block h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--blue);
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        .section-block p {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .section-block ul {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-block ul li {
+            margin-bottom: 0.4rem;
+        }
+
+        .qa-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .question {
+            font-weight: 700;
+            color: var(--text);
+            font-size: 1.05rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .navigation-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--line);
+            flex-wrap: wrap;
+        }
+
+        .navigation-links a {
+            font-weight: 600;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .navigation-links a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 800px) {
+            .bottom-image-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <div class="logo">AS<span>.</span></div>
+        <div class="nav-links">
+            <a href="index.html#projects">Projects</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#skills">Skills</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- PROJECT DETAIL -->
+    <div class="project-detail">
+
+        <!-- Back Link -->
+        <a href="index.html#projects" class="back-link">← Back to all projects</a>
+
+        <!-- Header -->
+        <div class="project-header">
+            <h1>48V-12V <span style="color: var(--accent);">Buck Converter</span></h1>
+        </div>
+
+        <!-- ONE SENTENCE DESCRIPTION BEFORE HERO IMAGE -->
+        <p class="subtitle">A DC-DC step-down buck converter board designed to convert a 48V input down to a stable 12V output rail for high-power system components.</p>
+
+        <!-- HERO IMAGE -->
+        <div class="image-placeholder hero-img">
+            <img src="Pictures/48V-12V Buck/Buck_3D.png" alt="3D image">
+        </div>
+
+        <p class="intro-text">Since I am still fairly new to PCB design, the project description is formatted as a Q&amp;A to document the questions I had while reviewing the datasheet, selecting components, and completing the layout.</p>
+
+        <!-- Schematic and Component Selection -->
+        <div class="section-block">
+            <h2>Schematic and Component Selection</h2>
+            <p>The TI TPSM65630 (P65630SVCGR) was selected because its operating parameters match the target input voltage range.</p>
+
+            <div class="qa-item">
+                <p class="question">What is a low-impedance connection?</p>
+                <ul>
+                    <li>A connection typically ranging from 2 to 600 Ω.</li>
+                    <li>It allows high current transfer with minimal power loss and voltage drop.</li>
+                </ul>
+            </div>
+
+            <div class="qa-item">
+                <p class="question">Why are there two VIN pins if they are tied together?</p>
+                <ul>
+                    <li><strong>Splitting current load (thermal management):</strong> Sharing the current across two pins reduces contact resistance and distributes heat evenly.</li>
+                    <li><strong>Internal circuit separation (noise cancellation):</strong> Separates noise-heavy high-power switching transistors from sensitive analog control logic to prevent switching noise from interfering with feedback loops.</li>
+                    <li><strong>Silicon layout and geometry:</strong> Optimizes internal die spacing and silicon trace routing.</li>
+                    <li>VIN1 and VIN2 are tied together externally and connected to an input capacitor array.</li>
+                    <li><strong>C_IN (Bulk Capacitor):</strong> Serves as a local energy reservoir, supplying rapid current demands when internal switches turn on to prevent input voltage dips.</li>
+                    <li><strong>C_HF (High-Frequency Decoupling Capacitor):</strong> Filters out fast, high-frequency voltage spikes that bulk capacitors cannot suppress due to parasitic inductance.</li>
+                </ul>
+            </div>
+
+            <div class="qa-item">
+                <p class="question">What capacitor types are best for high-power applications?</p>
+                <ul>
+                    <li><strong>Multilayer Ceramic Capacitors (MLCCs):</strong> Selected for their low Equivalent Series Resistance (ESR) and low Equivalent Series Inductance (ESL), enabling efficient noise filtering without power delivery bottlenecks.</li>
+                    <li><strong>X7R/X7T Dielectrics:</strong> Maintain structural stability and capacitance across high temperature and high voltage ranges.</li>
+                </ul>
+            </div>
+
+            <div class="qa-item">
+                <p class="question">What is a precision enable pin (EN)?</p>
+                <ul>
+                    <li>An input pin that enables or disables the IC at an exact, predictable voltage threshold (typically within 2% to 3% tolerance).</li>
+                    <li>EN is connected to VIN as specified in Table 5-1 (Pin Functions) of the datasheet.</li>
+                </ul>
+            </div>
+
+            <div class="qa-item">
+                <p class="question">If VCC originates from an internal LDO, why is it broken out to a pin, and why is the LDO needed?</p>
+                <ul>
+                    <li>The internal LDO steps down high input voltages to a safe operating level for internal control circuits.</li>
+                    <li>The external pin allows decoupling to complete the required circuit loop (input, output, and ground reference) and stabilize internal supply rails.</li>
+                </ul>
+            </div>
+
+            <div class="qa-item">
+                <p class="question">Why use two 22 µF capacitors in parallel for COUT?</p>
+                <p>The datasheet specifies a minimum COUT of 15 µF. Ceramic capacitors experience capacitance loss under DC bias voltage, so two capacitors are placed in parallel to:</p>
+                <ul>
+                    <li>Halve the Equivalent Series Inductance (ESL).</li>
+                    <li>Reduce DC bias capacitance degradation compared to using a single larger package.</li>
+                    <li>Improve thermal dissipation across multiple components.</li>
+                </ul>
+            </div>
+
+            <p>The feedback resistor values (RFBT and RFBB) were determined using Table 7-2 in the datasheet.</p>
+
+            <div class="qa-item">
+                <p class="question">How is the timing resistor (RT) value calculated?</p>
+                <ul>
+                    <li>Target switching frequency (FSW): 1800 kHz (selected from Table 7-2).</li>
+                    <li>Calculation formula: $RT\text{ (k}\Omega\text{)} = \frac{16.4}{FSW\text{ (MHz)}} - 0.633$</li>
+                    <li>Calculated value: $8.4781\text{ k}\Omega$; selected the closest standard resistor value ($8.45\text{ k}\Omega$).</li>
+                </ul>
+            </div>
+
+            <div class="qa-item">
+                <p class="question">What is the difference between AUTO and FPWM modes on the MODE/SYNC pin?</p>
+                <ul>
+                    <li><strong>AUTO Mode:</strong> Reduces switching frequency at light loads to maximize power efficiency.</li>
+                    <li><strong>FPWM Mode (Forced PWM):</strong> Maintains a fixed switching frequency regardless of load, delivering predictable output ripple and lower noise.</li>
+                    <li>Selected FPWM mode for EV applications to maintain deterministic signal behavior.</li>
+                </ul>
+            </div>
+
+            <p>Resistor power ratings were selected with a 2x safety margin over expected power dissipation.</p>
+            <p>While the PGOOD pin typically interfaces with an external microcontroller, an onboard MOSFET-driven LED indicator circuit was added to provide visual status indication for standalone operation.</p>
+
+            <!-- SCHEMATIC -->
+            <div class="img-container schematic-img">
+                <img src="Pictures/48V-12V Buck/48-12V Buck Converter Schematic.png" alt="Buck Converter Schematic Diagram" />
+            </div>
+        </div>
+
+        <!-- PCB Layout and Routing -->
+        <div class="section-block">
+            <h2>PCB Layout and Routing</h2>
+
+            <h3>Input Capacitors &amp; Feedback</h3>
+            <ul>
+                <li>Input capacitors are placed symmetrically and as close as possible to the VIN pads, using direct copper pours on the 48V net to minimize loop impedance.</li>
+                <li>The feedback resistor divider is placed directly adjacent to the IC feedback pin as recommended by the datasheet.</li>
+            </ul>
+
+            <h3>General Layout Conventions</h3>
+            <ul>
+                <li>Implemented solid copper pours for power and ground planes to minimize resistance and inductance.</li>
+                <li>Routed standard signal lines using trace widths between 0.2 mm and 0.3 mm.</li>
+            </ul>
+
+            <div class="qa-item">
+                <p class="question">If wider traces lower resistance and inductance, why not make all traces wide?</p>
+                <p>Trace width is selected based on current capacity, allowable temperature rise, voltage drop, and impedance requirements.</p>
+                <p>Extending copper pours to every trace introduces unnecessary parasitic capacitance, which negatively affects high-speed signal integrity.</p>
+                <p>For power and ground planes, inter-plane parasitic capacitance acts as a distributed high-frequency decoupling capacitor that stabilizes supply rails. However, on signal traces, excess capacitance forces signal drivers to charge and discharge larger parasitic loads, slowing edge transitions and degrading signal quality.</p>
+            </div>
+
+            <!-- LAST 3 IMAGES SIDE-BY-SIDE -->
+            <div class="bottom-image-grid">
+                <div class="grid-img-wrapper">
+                    <img src="Pictures/48V-12V Buck/48-12V Buck Converter PCB.png" alt="PCB Layout Top Layer" />
+                </div>
+                <div class="grid-img-wrapper">
+                    <img src="Pictures/48V-12V Buck/48-12V Buck Converter PCB Back.png" alt="PCB Layout Traces" />
+                </div>
+                <div class="grid-img-wrapper">
+                    <img src="Pictures/48V-12V Buck/48-12V Buck Converter Top.png" alt="PCB 3D Rendering" />
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="navigation-links">
+            <a href="index.html#projects">← Back to all projects</a>
+        </div>
+
+    </div>
+
+    <script>
+        window.addEventListener("scroll", function() {
+            const nav = document.getElementById("navbar");
+            if (window.scrollY > 30) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.remove("scrolled");
+            }
+        });
+    </script>
+
+</body>
+</html>

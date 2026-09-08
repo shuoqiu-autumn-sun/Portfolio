@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Self-Balancing Robot | Autumn Sun</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg: #f7f9f8;
+            --panel: #ffffff;
+            --panel-hover: #f0f5f2;
+            --text: #1e2a25;
+            --muted: #5a7168;
+            --light-text: #9aaf9f;
+            --line: #dce5e0;
+            --line-strong: #c5d4cd;
+            --accent: #f5b042;
+            --accent-hover: #e0942a;
+            --accent-glow: rgba(245, 176, 66, 0.2);
+            --teal: #4a9e8e;
+            --teal-hover: #3a8577;
+            --teal-glow: rgba(74, 158, 142, 0.15);
+            --blue: #5b8ea8;
+            --blue-hover: #4a7a94;
+            --blue-glow: rgba(91, 142, 168, 0.15);
+            --status-ok: #6a9e7a;
+            --status-fun: #5b8ea8;
+            --status-wow: #f5b042;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Inter", sans-serif;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--teal);
+            border-radius: 10px;
+            border: 2px solid var(--bg);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--blue);
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 72px;
+            padding: 0 6vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            background: rgba(247, 249, 248, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        nav.scrolled {
+            border-bottom-color: var(--line);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+            transition: color 0.3s;
+        }
+
+        .logo:hover span {
+            color: var(--teal);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.8rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* PROJECT DETAIL */
+        .project-detail {
+            padding: 120px 6vw 80px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .project-detail .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .project-detail .back-link:hover {
+            color: var(--accent);
+        }
+
+        .project-detail .project-header {
+            margin-bottom: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .project-detail .project-header .project-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.8rem;
+        }
+
+        .project-detail .project-header h1 {
+            font-size: clamp(40px, 5vw, 70px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-detail .project-header .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+        }
+
+        .project-detail .project-meta {
+            background: var(--panel);
+            border: 2px solid var(--line);
+            border-radius: 16px;
+            padding: 1.5rem 2rem;
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .project-detail .project-meta .meta-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-detail .project-meta .meta-item .label {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+        }
+
+        .project-detail .project-meta .meta-item .value {
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .project-detail .project-image-large {
+            background: var(--bg);
+            border: 2px solid var(--line);
+            border-radius: 24px;
+            padding: 4rem;
+            text-align: center;
+            font-size: 6rem;
+            margin-bottom: 3rem;
+            min-height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .project-detail .section-block {
+            margin-bottom: 3.5rem;
+        }
+
+        .project-detail .section-block h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--line);
+        }
+
+        .project-detail .section-block h2 .highlight {
+            color: var(--accent);
+        }
+
+        .project-detail .section-block p {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .project-detail .section-block ul {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .project-detail .section-block ul li {
+            margin-bottom: 0.3rem;
+        }
+
+        .project-detail .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .project-detail .tech-item {
+            background: var(--panel);
+            border: 2px solid var(--line);
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .project-detail .tech-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        .project-detail .tech-item .icon {
+            display: block;
+            font-size: 1.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-detail .navigation-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--line);
+            flex-wrap: wrap;
+        }
+
+        .project-detail .navigation-links a {
+            font-weight: 600;
+            color: var(--muted);
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .project-detail .navigation-links a:hover {
+            color: var(--accent);
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 600px) {
+            .project-detail {
+                padding: 100px 5vw 60px;
+            }
+            .project-detail .project-meta {
+                flex-direction: column;
+                gap: 0.8rem;
+            }
+            .project-detail .project-header {
+                flex-direction: column;
+            }
+            .project-detail .project-image-large {
+                padding: 2rem;
+                font-size: 4rem;
+                min-height: 200px;
+            }
+            .project-detail .tech-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+            .project-detail .navigation-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <div class="logo">AS<span>.</span></div>
+        <div class="nav-links">
+            <a href="../index.html#projects">Projects</a>
+            <a href="../index.html#about">About</a>
+            <a href="../index.html#skills">Skills</a>
+            <a href="../index.html#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- PROJECT DETAIL -->
+    <div class="project-detail">
+
+        <!-- Back Link - THIS GOES BACK TO THE MAIN PAGE -->
+        <a href="index.html#projects" class="back-link">← Back to all projects</a>
+
+        <!-- Project Header -->
+        <div class="project-header">
+            <div>
+                <div class="project-tag">🧠 Integrated</div>
+                <h1>Self-Balancing <span style="color: var(--accent);">Robot</span></h1>
+                <p class="subtitle">A two-wheel self-balancing robot using MPU6050 IMU and PID control on Arduino Uno</p>
+            </div>
+            <div style="font-size: 3rem; opacity: 0.3;">🤖</div>
+        </div>
+
+        <!-- Project Meta -->
+        <div class="project-meta">
+            <div class="meta-item">
+                <span class="label">Status</span>
+                <span class="value">✅ Complete &amp; Tested</span>
+            </div>
+            <div class="meta-item">
+                <span class="label">Duration</span>
+                <span class="value">4 Weeks</span>
+            </div>
+            <div class="meta-item">
+                <span class="label">Team</span>
+                <span class="value">Solo Project</span>
+            </div>
+            <div class="meta-item">
+                <span class="label">Category</span>
+                <span class="value">Control Systems · Robotics</span>
+            </div>
+        </div>
+
+        <!-- Image Placeholder -->
+        <div class="project-image-large">
+            🤖
+        </div>
+
+        <!-- Overview -->
+        <div class="section-block">
+            <h2>📋 <span class="highlight">Overview</span></h2>
+            <p>
+                The goal of this project was to build a two-wheel self-balancing robot from scratch.
+                The robot uses an MPU6050 IMU to measure its tilt angle and angular velocity, then
+                applies a PID control algorithm to keep itself upright.
+            </p>
+            <p>
+                This project was a great introduction to control systems, sensor fusion, and real-time
+                embedded programming. The challenge was tuning the PID gains to achieve stable balancing
+                while also making the robot responsive to external disturbances.
+            </p>
+        </div>
+
+        <!-- Component Selection -->
+        <div class="section-block">
+            <h2>🔧 <span class="highlight">Component Selection</span></h2>
+            <p>
+                Every component was chosen carefully to balance cost, performance, and ease of use:
+            </p>
+            <ul>
+                <li><strong>Microcontroller:</strong> Arduino Uno — simple, well-documented, and fast enough for real-time control</li>
+                <li><strong>IMU:</strong> MPU6050 — 6-axis accelerometer + gyroscope with built-in DMP for sensor fusion</li>
+                <li><strong>Motors:</strong> 2x NEMA 17 stepper motors with encoder feedback for precise speed control</li>
+                <li><strong>Motor Driver:</strong> L298N — simple dual H-bridge capable of driving both motors</li>
+                <li><strong>Power:</strong> 12V LiPo battery with voltage regulator for stable power delivery</li>
+                <li><strong>Chassis:</strong> 3D-printed PETG frame for durability and light weight</li>
+                <li><strong>Wheels:</strong> 65mm diameter rubber wheels for good grip and traction</li>
+            </ul>
+        </div>
+
+        <!-- Design Decisions -->
+        <div class="section-block">
+            <h2>💡 <span class="highlight">Design Decisions</span></h2>
+            <p>
+                Several key decisions shaped the final design of the balancing robot:
+            </p>
+            <ul>
+                <li><strong>Stepper vs DC Motors:</strong> Stepper motors were chosen for their precise position control without the need for encoders, simplifying the control loop.</li>
+                <li><strong>PID on Angle vs Angular Velocity:</strong> The control loop uses a PID controller on the measured tilt angle, with the derivative term acting as damping on the angular velocity.</li>
+                <li><strong>Sensor Fusion:</strong> The MPU6050's DMP was used to combine accelerometer and gyroscope data into a single, stable tilt angle estimate.</li>
+                <li><strong>Low-Pass Filtering:</strong> A complementary filter was added to smooth the sensor readings and reduce noise in the control loop.</li>
+                <li><strong>Chassis Design:</strong> The center of gravity was kept as low as possible by mounting the battery at the bottom of the frame.</li>
+            </ul>
+        </div>
+
+        <!-- Challenges & Learnings -->
+        <div class="section-block">
+            <h2>⚡ <span class="highlight">Challenges &amp; Learnings</span></h2>
+            <p>
+                The most challenging part of this project was <strong>PID tuning</strong>. It took several
+                days of trial and error to find the right combination of gains that would balance the robot
+                without it oscillating wildly. The key learning was that the <strong>derivative term (Kd)</strong>
+                is crucial for damping out oscillations, while the <strong>proportional term (Kp)</strong>
+                determines how aggressively the robot responds to tilting.
+            </p>
+            <p>
+                Another challenge was <strong>power management</strong>. The motors required a lot of current
+                during startup, which would sometimes cause the Arduino to reset. Adding a separate voltage
+                regulator for the logic circuit solved this issue.
+            </p>
+        </div>
+
+        <!-- Results -->
+        <div class="section-block">
+            <h2>🏆 <span class="highlight">Results</span></h2>
+            <p>
+                The robot successfully balances on two wheels and can recover from small disturbances
+                (like gentle pushes). It can also handle slight inclines and can be controlled to move
+                forward and backward while maintaining balance.
+            </p>
+            <p>
+                The project demonstrated a solid understanding of <strong>PID control</strong>,
+                <strong>sensor fusion</strong>, and <strong>real-time embedded systems</strong>.
+            </p>
+        </div>
+
+        <!-- Tech Stack -->
+        <div class="section-block">
+            <h2>🛠️ <span class="highlight">Tech Stack</span></h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <span class="icon">⚡</span>
+                    Arduino
+                </div>
+                <div class="tech-item">
+                    <span class="icon">📐</span>
+                    C++
+                </div>
+                <div class="tech-item">
+                    <span class="icon">🧮</span>
+                    PID Control
+                </div>
+                <div class="tech-item">
+                    <span class="icon">📡</span>
+                    MPU6050
+                </div>
+                <div class="tech-item">
+                    <span class="icon">🔧</span>
+                    Stepper Motors
+                </div>
+                <div class="tech-item">
+                    <span class="icon">📊</span>
+                    Sensor Fusion
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="navigation-links">
+            <!-- THIS GOES BACK TO THE MAIN PAGE -->
+            <a href="index.html#projects">← Back to all projects</a>
+            <!-- THIS GOES TO THE NEXT PROJECT -->
+            <a href="autonomous-drone.html">Next Project →</a>
+        </div>
+
+    </div>
+
+    <script>
+        window.addEventListener("scroll", function() {
+            const nav = document.getElementById("navbar");
+            if (window.scrollY > 30) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.remove("scrolled");
+            }
+        });
+    </script>
+
+</body>
+</html>

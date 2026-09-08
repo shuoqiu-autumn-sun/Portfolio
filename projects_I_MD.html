@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Automated Medicine Dispenser | Autumn Sun</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg: #fcf9f2;
+            --panel: #fefcf7;
+            --text: #1e2a25;
+            --muted: #071024;
+            --line: #dce5e0;
+            --accent: #ffae00;
+            --pink: #f86cc9;
+            --blue: #5ba3d9;
+            --blue-glow: rgba(91, 163, 217, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Inter", sans-serif;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--blue);
+            border-radius: 10px;
+            border: 2px solid var(--bg);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 72px;
+            padding: 0 6vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            background: rgba(252, 249, 242, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        nav.scrolled {
+            border-bottom-color: var(--line);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+            transition: color 0.3s;
+        }
+
+        .logo:hover span {
+            color: var(--blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.8rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* PROJECT DETAIL */
+        .project-detail {
+            padding: 120px 6vw 80px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--muted);
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: var(--accent);
+        }
+
+        .project-header {
+            margin-bottom: 2.5rem;
+        }
+
+        .project-tag {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.3rem 0.9rem;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.8rem;
+        }
+
+        h1 {
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            font-size: 1.1rem;
+            max-width: 750px;
+        }
+
+        /* CLEAN IMAGE & MEDIA CONTAINERS */
+        .img-container {
+            text-align: center;
+            margin: 2rem 0 2.5rem;
+            background: transparent;
+            border: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .img-container img {
+            max-width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
+            border-radius: 8px;
+            display: block;
+        }
+
+        .video-wrapper {
+            width: 100%;
+            max-width: 800px;
+            margin: 1.5rem auto;
+            display: flex;
+            justify-content: center;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            border-radius: 8px;
+            outline: none;
+        }
+
+        /* FOOTNOTE / EXTERNAL LINK */
+        .github-footnote {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .github-footnote a {
+            color: var(--blue);
+            font-weight: 600;
+            text-decoration: underline;
+            transition: color 0.2s;
+        }
+
+        .github-footnote a:hover {
+            color: var(--accent);
+        }
+
+        /* CONTENT SECTIONS */
+        .section-block {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-block h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--line);
+        }
+
+        .section-block h2 .highlight {
+            color: var(--accent);
+        }
+
+        .section-block p {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .section-block ul {
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.8;
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-block ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation-links {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 2px solid var(--line);
+            flex-wrap: wrap;
+        }
+
+        .navigation-links a {
+            font-weight: 600;
+            color: var(--muted);
+            transition: color 0.2s;
+        }
+
+        .navigation-links a:hover {
+            color: var(--accent);
+        }
+
+        @media (max-width: 600px) {
+            .project-detail {
+                padding: 100px 5vw 60px;
+            }
+            .navigation-links {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <div class="logo">AS<span>.</span></div>
+        <div class="nav-links">
+            <a href="index.html#projects">Projects</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#skills">Skills</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT -->
+    <div class="project-detail">
+
+        <a href="index.html#projects" class="back-link">← Back to all projects</a>
+
+        <!-- Header -->
+        <div class="project-header">
+            <h1>Automated Medicine <span style="color: var(--blue);">Dispenser</span></h1>
+            <p class="subtitle">A rotary dispensing mechanism built using VEX IQ components that alerts users to take or refill their medication with automatic tracking and scheduling.</p>
+        </div>
+
+        <!-- HERO IMAGE -->
+        <div class="img-container">
+            <img src="Pictures/MD/Dispenser.jpg" alt="Automated Medicine Dispenser Prototype">
+        </div>
+
+        <!-- Motivation -->
+        <div class="section-block">
+            <h2><span class="highlight">Motivation</span></h2>
+            <p>
+                Many people take daily medications, including vitamins and prescriptions, yet it is easy to forget or miss doses. To address this, my team designed an automated medicine dispenser using VEX components that alerts users when it is time to take their medication and dispenses it automatically.
+            </p>
+        </div>
+
+        <!-- Component Selection -->
+        <div class="section-block">
+            <h2><span class="highlight">Component Selection</span></h2>
+            <ul>
+                <li><strong>VEX Brain:</strong> Controls sensors, motors, timing logic, and real-time screen output.</li>
+                <li><strong>Bumper Sensor:</strong> Increments time parameters and allows the user to log a skipped dose.</li>
+                <li><strong>Touch Sensor:</strong> Confirms scheduled alarm times and dispenses medication on demand.</li>
+                <li><strong>Distance Sensor:</strong> Detects user presence to ensure they have taken their medication before auto-retracting.</li>
+                <li><strong>Stepper Motors (×3):</strong> Drive the inner rotor, rotate the dispensing drawer, and tilt the dispenser box for refills.</li>
+            </ul>
+        </div>
+
+        <!-- Functionality -->
+        <div class="section-block">
+            <h2><span class="highlight">Functionality</span></h2>
+            <ul>
+                <li><strong>Alarm System:</strong> Alerts the user with visual and audio cues at the scheduled medication time.</li>
+                <li><strong>Dispensing Logic:</strong> Pressing the touch sensor dispenses pills into the tray; the bumper sensor manually logs a skipped dose.</li>
+                <li><strong>Automated Drawer:</strong> Extends outward during dispensing and automatically retracts after the user leaves.</li>
+                <li><strong>Compliance Tracking:</strong> Records, tallies, and displays taken vs. missed doses directly on the screen display.</li>
+                <li><strong>Refill Alert Mechanism:</strong> Tilts the pill box frame when medication runs empty, signaling the user to reload.</li>
+            </ul>
+
+            <!-- Footnote Link to GitHub -->
+            <p class="github-footnote">
+                * To view the full source code implementation, check out my repository on <a href="https://github.com/shuoqiu-autumn-sun/Automated-Medicine-Dispenser" target="_blank" rel="noopener noreferrer">GitHub</a>.
+            </p>
+        </div>
+
+        <!-- ANNOTATED SYSTEM DIAGRAM -->
+        <div class="img-container">
+            <img src="Pictures/MD/MD_Annotated.png" alt="Annotated System Diagram of Medicine Dispenser">
+        </div>
+
+        <!-- Design Decisions -->
+        <div class="section-block">
+            <h2><span class="highlight">Design Decisions</span></h2>
+            <p>
+                My primary responsibilities included designing the inner rotor, drawer, outer cover, and optimizing sensor layout:
+            </p>
+            <ul>
+                <li><strong>Inner Rotor:</strong> Engineered with 15 individual compartments to hold up to two weeks of medication. Dimensioned slightly smaller than the outer shell to guarantee smooth rotation without binding or pill spilling.</li>
+                <li><strong>Drawer Mechanism:</strong> Features a rounded, curved interior floor for easy pill retrieval and hassle-free cleaning.</li>
+                <li><strong>Enclosure Cover:</strong> Built-in magnet slots allow quick detaching for refilling; fine-tuned 3D printing settings were used to achieve a clear, translucent finish.</li>
+                <li><strong>Sensor Placement:</strong> Touch and bumper sensors are mounted directly under the VEX Brain for convenient access, while the distance sensor faces outward from the drawer to monitor user departure.</li>
+            </ul>
+        </div>
+
+        <!-- Action Videos -->
+        <div class="section-block">
+            <h2><span class="highlight">Demo Video</span></h2>
+            <div class="video-wrapper">
+                <video controls preload="metadata">
+                    <source src="Pictures/MD/MD_Operating.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
+
+        <!-- Points of Improvement -->
+        <div class="section-block">
+            <h2><span class="highlight">Points of Improvement</span></h2>
+            <ul>
+                <li><strong>Time Input Restrictions:</strong> Interface code does not currently allow users to edit or re-enter reminder times if an error is made during setup.</li>
+                <li><strong>Sensor Multi-mapping:</strong> Mapping multiple functions to single sensors created mild usability confusion during user testing.</li>
+                <li><strong>Drawer Motion Profile:</strong> The drawer extends and retracts along a radial arc rather than a linear track, which proved less intuitive.</li>
+                <li><strong>Clear Optical Path:</strong> The distance sensor requires an unobstructed line-of-sight to correctly detect user departure and trigger drawer retraction.</li>
+            </ul>
+        </div>
+
+        <!-- Bottom Navigation -->
+        <div class="navigation-links">
+            <a href="index.html#projects">← Back to all projects</a>
+        </div>
+
+    </div>
+
+    <script>
+        window.addEventListener("scroll", function() {
+            const nav = document.getElementById("navbar");
+            if (window.scrollY > 30) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.remove("scrolled");
+            }
+        });
+    </script>
+
+</body>
+</html>

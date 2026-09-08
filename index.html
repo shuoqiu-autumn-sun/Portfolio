@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Autumn Sun | Mechatronics Engineering</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+        :root {
+            --bg: #fcf9f2;  
+            --panel: #fefcf7; 
+            --panel-hover: #faf6ed;  
+            
+            --text: #1e2a25;
+            --muted: #5a7168;
+            --light-text: #9aaf9f;
+            
+            --line: #dce5e0;
+            --line-strong: #c5d4cd;
+            
+            --accent: #ffae00;
+            --accent-hover: #e0942a;
+            --accent-glow: rgba(245, 176, 66, 0.2);
+            
+            --pink: #f86cc9;  
+            --pink-hover: #dc599d;  
+            --pink-glow: rgba(179, 74, 169, 0.15);  
+            
+            --blue: #5ba3d9;  
+            --blue-hover: #4a8fc4;  
+            --blue-glow: rgba(91, 163, 217, 0.15);  
+            
+            --status-ok: #e788c6;
+            --status-fun: #5b8ea8;
+            --status-wow: #f5b042;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: "Inter", sans-serif;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--pink);
+            border-radius: 10px;
+            border: 2px solid var(--bg);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--blue);
+        }
+
+        /* NAVIGATION */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 72px;
+            padding: 0 6vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 100;
+            background: rgba(247, 249, 248, 0.92);
+            backdrop-filter: blur(16px);
+            border-bottom: 2px solid transparent;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        nav.scrolled {
+            border-bottom-color: var(--line);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+        }
+
+        .logo span {
+            color: var(--accent);
+            transition: color 0.3s;
+        }
+
+        .logo:hover span {
+            color: var(--pink);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.8rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* HERO */
+        .hero {
+            min-height: 85vh;
+            padding: 140px 6vw 80px;
+            display: flex;
+            align-items: center;
+            border-bottom: 2px solid var(--line);
+        }
+
+        .hero-grid {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            gap: 3rem;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .hero-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .hero-image-container {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            min-width: 0;
+        }
+
+        .hero-image {
+            width: 100%;
+            max-width: 480px;
+            height: auto;
+            object-fit: contain;
+            border-radius: 12px;
+        }
+
+        .hero-content .eyebrow {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--pink);
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            font-size: clamp(40px, 6vw, 80px);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.04em;
+        }
+
+        h1 .highlight-yellow {
+            color: var(--accent);
+            font-style: normal;
+        }
+
+        h1 .highlight-teal {
+            color: var(--pink);
+            font-style: normal;
+        }
+
+        h1 .highlight-blue {
+            color: var(--blue);
+            font-style: normal;
+        }
+
+        .hero-text {
+            color: var(--muted);
+            max-width: 520px;
+            margin: 1.8rem 0 2.5rem;
+            font-size: 1.2rem;
+            line-height: 1.8;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .button {
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: none;
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .button-primary {
+            background: var(--blue);
+            color: #fff;
+            box-shadow: 0 4px 15px var(--blue-glow);
+        }
+
+        .button-primary:hover {
+            background: var(--blue-hover);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px var(--blue-glow);
+        }
+
+        .button-secondary {
+            background: var(--panel);
+            color: var(--text);
+            border: 2px solid var(--line);
+        }
+
+        .button-secondary:hover {
+            border-color: var(--pink);
+            background: transparent;
+            transform: translateY(-3px);
+        }
+
+        .button-teal {
+            background: var(--pink);
+            color: #fff;
+            box-shadow: 0 4px 15px var(--pink-glow);
+        }
+
+        .button-teal:hover {
+            background: var(--pink-hover);
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        /* SECTIONS */
+        section {
+            padding: 100px 6vw;
+            border-bottom: 2px solid var(--line);
+        }
+
+        .section-header {
+            margin-bottom: 3.5rem;
+        }
+
+        .section-label {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 0.2rem;
+        }
+
+        h2 {
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        h2 .highlight-teal {
+            color: var(--pink);
+            font-style: normal;
+        }
+
+        h2 .highlight-blue {
+            color: var(--blue);
+            font-style: normal;
+        }
+
+        .section-intro {
+            color: var(--muted);
+            max-width: 500px;
+            font-size: 1.1rem;
+            line-height: 1.7;
+            margin-top: 0.8rem;
+        }
+
+        /* PROJECTS - Category Layout */
+        .project-category {
+            margin-bottom: 4rem;
+        }
+
+        .project-category:last-child {
+            margin-bottom: 0;
+        }
+
+        .category-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--blue);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid var(--line);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .category-title .badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        .badge-mechanical { background: var(--accent); }
+        .badge-electrical { background: var(--pink); }
+        .badge-integrated { background: var(--blue); }
+
+        .project-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .project-card {
+            background: var(--panel);
+            border: 2px solid var(--line);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent);
+            box-shadow: 0 16px 40px -12px rgba(245, 176, 66, 0.15);
+        }
+
+        .project-card .project-info {
+            padding: 1.5rem 1.8rem 1.8rem;
+        }
+
+        .project-card .project-info h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 0.3rem;
+        }
+
+        .project-card .project-info .description {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 0.4rem 0 1rem;
+        }
+
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: var(--pink);
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+        }
+
+        .project-link:hover {
+            color: var(--pink-hover);
+            gap: 0.6rem;
+            border-bottom-color: var(--pink);
+        }
+
+
+        /* SKILLS */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .skill-card {
+            background: var(--panel);
+            border: 2px solid var(--line);
+            border-radius: 20px;
+            padding: 2rem 1.8rem;
+            transition: all 0.3s;
+        }
+
+        .skill-card:hover {
+            border-color: var(--blue);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -10px var(--blue-glow);
+        }
+
+        .skill-card h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .skill-card p {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* CONTACT */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3.5rem;
+            align-items: center;
+        }
+
+        .contact-image-container {
+            width: 100%;
+        }
+
+        .contact-image {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            aspect-ratio: 1432 / 1080;
+            object-fit: contain;
+            border-radius: 20px;
+            border: 2px solid var(--line);
+            display: block;
+        }
+
+        .contact-content h2 {
+            margin-bottom: 0.8rem;
+        }
+
+        .contact-content p {
+            color: var(--muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.8rem;
+        }
+
+        .email-link {
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-bottom: 3px solid var(--accent);
+            padding-bottom: 0.3rem;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .email-link:hover {
+            color: var(--accent);
+            border-bottom-color: var(--pink);
+            transform: translateX(4px);
+        }
+
+        .contact-socials {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-socials a {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--muted);
+            transition: all 0.3s;
+        }
+
+        .contact-socials a:hover {
+            color: var(--accent);
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 2rem 6vw;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+            border-top: 2px solid var(--line);
+            flex-wrap: wrap;
+            gap: 1rem;
+            background: var(--panel);
+        }
+
+        footer .footer-fun {
+            color: var(--blue);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        footer .footer-fun:hover {
+            color: var(--accent);
+        }
+
+        footer .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--status-ok);
+            display: inline-block;
+            animation: pulse-dot 2s ease-in-out infinite;
+            margin-right: 0.4rem;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        /* RESPONSIVE BREAKPOINTS */
+        @media (max-width: 900px) {
+            .hero-grid {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .hero-image-container {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .hero-image {
+                max-width: 100%;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .hero {
+                min-height: 70vh;
+                padding-top: 100px;
+            }
+            nav {
+                height: 62px;
+                padding: 0 5vw;
+            }
+            .nav-links a {
+                font-size: 0.75rem;
+            }
+            .nav-links {
+                gap: 1rem;
+            }
+            .button {
+                padding: 0.7rem 1.5rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAV -->
+    <nav id="navbar">
+        <div class="logo">AS.</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#projects">Projects</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-grid">
+            <div class="hero-content">
+                <p class="eyebrow">MECHATRONICS ENGINEERING · UNIVERSITY OF WATERLOO</p>
+                <h1>
+                    Hi! I'm <span class="highlight-yellow">Autumn</span>
+                </h1>
+                <p class="hero-text">
+                    I'm a Mechatronics Engineering student passionate about mechanical design, PCB layout, 
+                    and electronics in general :D
+                </p>
+                <div class="buttons">
+                    <a class="button button-primary" href="#projects">
+                        Check out my projects ↓
+                    </a>
+                    <a class="button button-secondary" href="#contact">
+                        Let's chat
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-image-container">
+                <img src="C:\Users\Shuoq\OneDrive\Documents\Portfolio Website 20260828\Pictures\Front_Image.png" alt="Autumn Sun" class="hero-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Portfolio</div>
+                <h2> Projects </h2>
+            </div>
+        </div>
+
+        <!-- Integrated Category -->
+        <div class="project-category">
+            <div class="category-title">
+                <span>Integrated</span>
+            </div>
+            <div class="project-row">
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>Self-Balancing Robot</h3>
+                        <p class="description">Two-wheel self-balancing robot using MPU6050 IMU and PID control on Arduino Uno.</p>
+                        <a href="projects_I_SBC.html" class="project-link">View Project →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>Automatic Medicine Dispenser</h3>
+                        <p class="description">Automated VEX IQ rotary pill dispenser featuring real-time audio reminders for taking medication.</p>
+                        <a href="projects_I_MD.html" class="project-link">View Project →</a>
+                    </div>
+                </div>
+                <!--
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>Mini Combat Robotics Arena System</h3>
+                        <p class="description">Mini arena system with lighting and countdown effects using an ESP32 and LED matrix.</p>
+                        <a href="projects_I_Arena.html" class="project-link">View Project →</a>
+                    </div>
+                </div>
+                -->
+            </div>
+        </div>
+
+        <!-- Electrical Category -->
+        <div class="project-category">
+            <div class="category-title">
+                <span>Electrical</span>
+            </div>
+            <div class="project-row">
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>Custom STM32 PCB</h3>
+                        <p class="description">Custom STM32 microcontroller board integrated with an MPU6050 gyro.</p>
+                        <a href="projects_E_STM32.html" class="project-link">View Project →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>48V-12V Buck Converter</h3>
+                        <p class="description">Power module using TI's TPSM65630 to step down 48V to 12V for low-voltage systems.</p>
+                        <a href="projects_E_Buck.html" class="project-link">View Project →</a>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>9V-3.3V LDO</h3>
+                        <p class="description">UWaterloo Robotics Team onboarding project delivering a stable 3.3V rail from a 9V supply using TI's TLV76701 linear regulator.</p>
+                        <a href="projects_E_LDO.html" class="project-link">View Project →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mechanical Category -->
+        <div class="project-category">
+            <div class="category-title">
+                <span>Mechanical</span>
+            </div>
+            <div class="project-row">
+                <div class="project-card">
+                    <div class="project-info">
+                        <h3>Fly Away</h3>
+                        <p class="description">3lb combat robot featuring a custom crank-and-rocker lifter driven by a high-torque gearbox and impact-resistant armor designed to withstand hits.</p>
+                        <a href="projects_M_FA.html" class="project-link">View Project →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills">
+        <div class="section-header">
+            <div>
+                <div class="section-label">Toolbox</div>
+                <h2> Skills Profile </h2>
+            </div>
+        </div>
+
+        <div class="skills-grid">
+            <div class="skill-card">
+                <h4>Mechanical & Fabrication</h4>
+                <p>SolidWorks · Fusion 360 · AutoCAD · 3D Printing · Lathe · Waterjet</p>
+            </div>
+            <div class="skill-card">
+                <h4>Electronics</h4>
+                <p>Altium Designer · KiCad · STM32CubeIDE · Soldering · DMM</p>
+            </div>
+            <div class="skill-card">
+                <h4>Software</h4>
+                <p>C++ · ArduinoIDE · Python · HTML/CSS · Git/GitHub</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="contact-grid">
+            <div class="contact-image-container">
+                <img src="C:\Users\Shuoq\OneDrive\Documents\Portfolio Website 20260828\Pictures\headshot_bright.jpg" alt="Autumn Sun" class="contact-image">
+            </div>
+            <div class="contact-content">
+                <div class="section-label">Contact</div>
+                <h2>Let's connect!</h2>
+                <p>
+                    I am always happy to chat :D
+                </p>
+                <a class="email-link" href="mailto:shuoqiu.autumn.sun@gmail.com">
+                    shuoqiu.autumn.sun@gmail.com →
+                </a>
+                <div class="contact-socials">
+                    <a href="https://linkedin.com/in/shuoqiu-autumn-sun" target="_blank" rel="noopener noreferrer" title="LinkedIn">LinkedIn</a>
+                    <a href="https://github.com/shuoqiu-autumn-sun" target="_blank" rel="noopener noreferrer" title="GitHub">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <span>© 2026 AUTUMN SUN</span>
+        <span class="footer-fun">
+            <span class="status-dot"></span>
+            Thank you for checking out my portfolio!
+        </span>
+        <span>MECHATRONICS ENGINEERING</span>
+    </footer>
+
+    <script>
+        window.addEventListener("scroll", function() {
+            const nav = document.getElementById("navbar");
+            if (window.scrollY > 30) {
+                nav.classList.add("scrolled");
+            } else {
+                nav.classList.remove("scrolled");
+            }
+        });
+    </script>
+</body>
+</html>
