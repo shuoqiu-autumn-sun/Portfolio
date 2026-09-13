@@ -196,6 +196,7 @@
         }
 
         .section-block h2 {
+            color: var(--accent);
             font-size: 1.8rem;
             font-weight: 800;
             margin-bottom: 1rem;
@@ -204,7 +205,7 @@
         }
 
         .section-block h2 .highlight {
-            color: var(--accent);
+            color: var(--blue);
         }
 
         .section-block h3 {
@@ -219,6 +220,10 @@
             font-size: 1.05rem;
             line-height: 1.8;
             margin-bottom: 1rem;
+        }
+
+        .section-block p strong {
+            color: var(--text);
         }
 
         .section-block ul {
@@ -289,33 +294,19 @@
 
         <!-- Project Header -->
         <div class="project-header">
-            <h1>STM32 <span style="color: var(--accent);">Custom PCB</span></h1>
-            <p class="subtitle">Designed and layout a custom STM32 development board featuring an integrated MPU-6050 6-axis IMU, USB-C power, and SWD debugging capabilities.</p>
-        </div>
-
-        <div class="top-image-grid">
-            <div class="grid-img-wrapper">
-                <img src="Pictures/STM32/STM_PCB_top.png" alt="STM32 Custom PCB Design Top View" />
-            </div>
-            <div class="grid-img-wrapper">
-                <img src="Pictures/STM32/STM_3D_top.png" alt="STM32 Custom PCB 3D Render Top View" />
-            </div>
-        </div>
-
-        <!-- Motivation -->
-        <div class="section-block">
-            <h2><span class="highlight">Motivation</span></h2>
-            <p>
-                I designed a custom STM32 development board by following a YouTube tutorial to build intuition for electrical design while strengthening my skills in Altium and becoming familiar with its features. This project also served as an introduction to the STM32 ecosystem, providing a structured starting point for learning embedded systems development.
-            </p>
+            <h1>Custom <span style="color: var(--accent);">STM32 PCB</span></h1>
         </div>
 
         <!-- Overview -->
         <div class="section-block">
             <h2><span class="highlight">Overview</span></h2>
             <p>
-                This project was my first step into working with STM32 microcontrollers after previously only using Arduino. I chose to follow an existing STM32 tutorial as a structured way to get started, since it allowed me to focus on learning the basics of schematic design, PCB layout, and firmware bring-up without overcomplicating the board. The goal was to build a simple, reliable development board using an STM32F4 and a small set of supporting components, and to use the project as a way to build intuition around embedded system design.
+                I designed a custom STM32 development board by following a YouTube tutorial to build intuition for electrical design while strengthening my skills in Altium and becoming familiar with its features. This project also served as an introduction to the STM32 ecosystem, providing a starting point for learning embedded systems development.
             </p>
+        </div>
+
+        <div class="img-container">
+            <img src="Pictures/STM32/STM32.png" alt="Inertial Measurement Unit MPU-6050 Schematic" />
         </div>
 
         <!-- Schematic & Component Selection -->
@@ -325,81 +316,88 @@
                 All capacitors, resistors, LEDs, and crystals are SMD to match MCU speed, enable proper decoupling, and allow cleaner and smaller layout.
             </p>
 
-            <h3>Microcontroller (STM32F4)</h3>
-            <p><strong>STM32F411CEU6 MCU (U2)</strong></p>
-            <ul>
-                <li><strong>2.2uF Capacitor 0603 (C7, C13):</strong>
-                    <ul>
-                        <li><strong>C7:</strong> Bulk capacitor stabilizing 3.3 V supply against low-frequency transients.</li>
-                        <li><strong>C13:</strong> Required capacitor for STM32 internal core voltage regulator stability.</li>
-                    </ul>
-                </li>
-                <li><strong>10pF Capacitor 0402 (C5, C6):</strong> Crystal load capacitors ensuring stable oscillation and correct frequency.</li>
-                <li><strong>100nF Capacitor 0402 (C8-C12, C14):</strong>
-                    <ul>
-                        <li><strong>C8-C12:</strong> Local decoupling capacitors suppressing high-frequency switching noise at VDD.</li>
-                        <li><strong>C14:</strong> NRST line noise filtering and reset signal stabilization.</li>
-                    </ul>
-                </li>
-                <li><strong>Red LED 0402 (D2):</strong> Visual indicator for firmware status and debugging.</li>
-                <li><strong>Debugging Cable (J2):</strong> Provides SWD programming, debugging, reset, and power reference access.</li>
-                <li><strong>Header Connector (J3):</strong> External peripheral connector supplying power, ground, and GPIO signals.</li>
-                <li><strong>1kOhm Resistor 0402 (R5):</strong> Limits current through MCU status LED to safe levels.</li>
-                <li><strong>0kOhm Resistor 0402 (R2):</strong> For oscillator debugging or trace impedance tuning.</li>
-                <li><strong>2.2kOhm Resistor 0402 (R3-R4):</strong> I²C pull-up resistors defining logic-high levels on SDA and SCL.</li>
-                <li><strong>10kOhm Resistor 0402 (R6-R7):</strong>
-                    <ul>
-                        <li><strong>R6:</strong> Pull-down resistor keeping NRST low during power-up conditions.</li>
-                        <li><strong>R7:</strong> BOOT0 pull-up selecting normal Flash boot mode.</li>
-                    </ul>
-                </li>
-                <li><strong>24MHz Crystal (X1):</strong> Provides accurate external clock for STM32 system timing.</li>
-            </ul>
-
+            <h3>Microcontroller (STM32F411CEU6)</h3>
             <div class="img-container">
                 <img src="Pictures/STM32/STM_main_ic.png" alt="Microcontroller STM32F4 Schematic" />
             </div>
 
-            <h3>USB Connector and LDO Regulator (+5V to +3V3)</h3>
+            <p><strong>2.2uF Capacitor 0603 (C7, C13):</strong></p>
             <ul>
-                <li><strong>USB Connector (J1):</strong> Provides USB power, data signals, and ground from host device.</li>
-                <li><strong>AMS1117 Voltage Regulator (U1):</strong> Linear regulator converting 5 V USB supply to stable 3.3 V.</li>
-                <li><strong>2.2uF Capacitor 0603 (C1-C2):</strong>
-                    <ul>
-                        <li><strong>C1:</strong> Bulk capacitor smoothing USB VBUS voltage fluctuations.</li>
-                        <li><strong>C2:</strong> Input decoupling capacitor improving regulator stability and noise rejection.</li>
-                    </ul>
-                </li>
-                <li><strong>22uF Capacitor 0402 (C3-C4):</strong>
-                    <ul>
-                        <li><strong>C3:</strong> Additional bulk capacitance supporting regulator transient current demands.</li>
-                        <li><strong>C4:</strong> Output capacitor ensuring AMS1117 stability and low output ripple.</li>
-                    </ul>
-                </li>
-                <li><strong>Green LED 0402 (D1):</strong> Indicates presence of regulated 3.3 V power rail.</li>
-                <li><strong>120Ohm Ferrite Bead 0603 (FB1):</strong> Filters high-frequency noise from USB VBUS before regulator input.</li>
-                <li><strong>1kOhm Resistor 0402 (R1):</strong> Limits current through power LED to safe operating level.</li>
+                <li><strong>C7:</strong> Bulk capacitor stabilizing 3.3 V supply against low-frequency transients.</li>
+                <li><strong>C13:</strong> Required capacitor for STM32 internal core voltage regulator stability.</li>
             </ul>
 
+            <p><strong>10pF Capacitor 0402 (C5, C6):</strong> Crystal load capacitors ensuring stable oscillation and correct frequency.</p>
+
+            <p><strong>100nF Capacitor 0402 (C8-C12, C14):</strong></p>
+            <ul>
+                <li><strong>C8-C12:</strong> Local decoupling capacitors suppressing high-frequency switching noise at VDD.</li>
+                <li><strong>C14:</strong> NRST line noise filtering and reset signal stabilization.</li>
+            </ul>
+
+            <p><strong>Red LED 0402 (D2):</strong> Visual indicator for firmware status and debugging.</p>
+            <p><strong>Debugging Cable (J2):</strong> Provides SWD programming, debugging, reset, and power reference access.</p>
+            <p><strong>Header Connector (J3):</strong> External peripheral connector supplying power, ground, and GPIO signals.</p>
+            <p><strong>1kOhm Resistor 0402 (R5):</strong> Limits current through MCU status LED to safe levels.</p>
+            <p><strong>0kOhm Resistor 0402 (R2):</strong> For oscillator debugging or trace impedance tuning.</p>
+            <p><strong>2.2kOhm Resistor 0402 (R3-R4):</strong> I²C pull-up resistors defining logic-high levels on SDA and SCL.</p>
+
+            <p><strong>10kOhm Resistor 0402 (R6-R7):</strong></p>
+            <ul>
+                <li><strong>R6:</strong> Pull-down resistor keeping NRST low during power-up conditions.</li>
+                <li><strong>R7:</strong> BOOT0 pull-up selecting normal Flash boot mode.</li>
+            </ul>
+
+            <p><strong>24MHz Crystal (X1):</strong> Provides accurate external clock for STM32 system timing.</p>
+
+            <h3>USB Connector and LDO Regulator (+5V to +3V3)</h3>
             <div class="img-container">
                 <img src="Pictures/STM32/STM_USB_LDO.png" alt="USB Connector and LDO Regulator Schematic" />
             </div>
+            <p><strong>USB Connector (J1):</strong> Provides USB power, data signals, and ground from host device.</p>
+            <p><strong>AMS1117 Voltage Regulator (U1):</strong> Linear regulator converting 5 V USB supply to stable 3.3 V.</p>
 
-            <h3>Inertial Measurement Unit (MPU-6050)</h3>
-            <p><strong>MPU 6050 Gyro (U3)</strong> (I2C Addr.: 0x68)</p>
+            <p><strong>2.2uF Capacitor 0603 (C1-C2):</strong></p>
             <ul>
-                <li><strong>100nF Capacitor 0402 (C15-C16):</strong>
-                    <ul>
-                        <li><strong>C15:</strong> Filter noise and stabilize internal voltage regulator.</li>
-                        <li><strong>C16:</strong> Decoupling capacitor.</li>
-                    </ul>
-                </li>
-                <li><strong>10nF Capacitor 0402 (C17):</strong> Allow clean digital signaling.</li>
-                <li><strong>2.2uF Capacitor 0603 (C18):</strong> Energy transfer element for charge pump.</li>
+                <li><strong>C1:</strong> Bulk capacitor smoothing USB VBUS voltage fluctuations.</li>
+                <li><strong>C2:</strong> Input decoupling capacitor improving regulator stability and noise rejection.</li>
             </ul>
 
+            <p><strong>22uF Capacitor 0402 (C3-C4):</strong></p>
+            <ul>
+                <li><strong>C3:</strong> Additional bulk capacitance supporting regulator transient current demands.</li>
+                <li><strong>C4:</strong> Output capacitor ensuring AMS1117 stability and low output ripple.</li>
+            </ul>
+
+            <p><strong>Green LED 0402 (D1):</strong> Indicates presence of regulated 3.3 V power rail.</p>
+            <p><strong>120Ohm Ferrite Bead 0603 (FB1):</strong> Filters high-frequency noise from USB VBUS before regulator input.</p>
+            <p><strong>1kOhm Resistor 0402 (R1):</strong> Limits current through power LED to safe operating level.</p>
+
+            <h3>Inertial Measurement Unit (MPU-6050)</h3>
             <div class="img-container">
                 <img src="Pictures/STM32/STM_Gyro.png" alt="Inertial Measurement Unit MPU-6050 Schematic" />
+            </div>
+
+            <p><strong>100nF Capacitor 0402 (C15-C16):</strong></p>
+            <ul>
+                <li><strong>C15:</strong> Filter noise and stabilize internal voltage regulator.</li>
+                <li><strong>C16:</strong> Decoupling capacitor.</li>
+            </ul>
+
+            <p><strong>10nF Capacitor 0402 (C17):</strong> Allow clean digital signaling.</p>
+            <p><strong>2.2uF Capacitor 0603 (C18):</strong> Energy transfer element for charge pump.</p>
+
+        </div>
+        
+        <div class="section-block">
+            <h2><span class="highlight">PCB Layout</span></h2>
+            <div class="top-image-grid">
+                <div class="grid-img-wrapper">
+                    <img src="Pictures/STM32/STM_PCB_top.png" alt="STM32 Custom PCB Design Top View" />
+                </div>
+                <div class="grid-img-wrapper">
+                    <img src="Pictures/STM32/STM_3D_top.png" alt="STM32 Custom PCB 3D Render Top View" />
+                </div>
             </div>
         </div>
 

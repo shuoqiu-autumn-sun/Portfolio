@@ -245,7 +245,7 @@
         }
 
         .section-block h2 .highlight {
-            color: var(--accent);
+            color: var(--blue);
         }
 
         .section-block p {
@@ -318,8 +318,15 @@
 
         <!-- Header -->
         <div class="project-header">
-            <h1>Automated Medicine <span style="color: var(--blue);">Dispenser</span></h1>
-            <p class="subtitle">A rotary dispensing mechanism built using VEX IQ components that alerts users to take or refill their medication with automatic tracking and scheduling.</p>
+            <h1>Automated <span style="color: var(--accent);">Medicine Dispenser</span></h1>
+        </div>
+
+        <!-- Overview -->
+        <div class="section-block">
+            <h2><span class="highlight">Overview</span></h2>
+            <p>
+                Many people take daily medications, including vitamins and prescriptions, yet it is easy to forget or miss doses. To address this, my team designed an automated medicine dispenser using VEX components that alerts users when it is time to take their medication and dispenses it automatically.
+            </p>
         </div>
 
         <!-- HERO IMAGE -->
@@ -327,36 +334,24 @@
             <img src="Pictures/MD/Dispenser.jpg" alt="Automated Medicine Dispenser Prototype">
         </div>
 
-        <!-- Motivation -->
-        <div class="section-block">
-            <h2><span class="highlight">Motivation</span></h2>
-            <p>
-                Many people take daily medications, including vitamins and prescriptions, yet it is easy to forget or miss doses. To address this, my team designed an automated medicine dispenser using VEX components that alerts users when it is time to take their medication and dispenses it automatically.
-            </p>
-        </div>
-
         <!-- Component Selection -->
         <div class="section-block">
             <h2><span class="highlight">Component Selection</span></h2>
-            <ul>
-                <li><strong>VEX Brain:</strong> Controls sensors, motors, timing logic, and real-time screen output.</li>
-                <li><strong>Bumper Sensor:</strong> Increments time parameters and allows the user to log a skipped dose.</li>
-                <li><strong>Touch Sensor:</strong> Confirms scheduled alarm times and dispenses medication on demand.</li>
-                <li><strong>Distance Sensor:</strong> Detects user presence to ensure they have taken their medication before auto-retracting.</li>
-                <li><strong>Stepper Motors (×3):</strong> Drive the inner rotor, rotate the dispensing drawer, and tilt the dispenser box for refills.</li>
-            </ul>
+            <p><strong>VEX Brain:</strong> Controls sensors, motors, timing logic, and screen output.</p>
+            <p><strong>Bumper Sensor:</strong> Increments time parameters and allows the user to log a skipped dose.</p>
+            <p><strong>Touch Sensor:</strong> Confirms scheduled alarm times and dispenses medication once pressed.</p>
+            <p><strong>Distance Sensor:</strong> Detects user presence to ensure they have taken their medication before auto-retracting.</p>
+            <p><strong>Stepper Motors (×3):</strong> Drive the inner rotor, rotate the dispensing drawer, and tilt the dispenser box for refills.</p>
         </div>
 
         <!-- Functionality -->
         <div class="section-block">
             <h2><span class="highlight">Functionality</span></h2>
-            <ul>
-                <li><strong>Alarm System:</strong> Alerts the user with visual and audio cues at the scheduled medication time.</li>
-                <li><strong>Dispensing Logic:</strong> Pressing the touch sensor dispenses pills into the tray; the bumper sensor manually logs a skipped dose.</li>
-                <li><strong>Automated Drawer:</strong> Extends outward during dispensing and automatically retracts after the user leaves.</li>
-                <li><strong>Compliance Tracking:</strong> Records, tallies, and displays taken vs. missed doses directly on the screen display.</li>
-                <li><strong>Refill Alert Mechanism:</strong> Tilts the pill box frame when medication runs empty, signaling the user to reload.</li>
-            </ul>
+            <p><strong>Alarm System:</strong> Alerts the user with visual and audio cues at the scheduled medication time.</p>
+            <p><strong>Dispensing Logic:</strong> Pressing the touch sensor dispenses pills into the tray; the bumper sensor manually logs a skipped dose.</p>
+            <p><strong>Automated Drawer:</strong> Extends outward during dispensing and automatically retracts after the user leaves.</p>
+            <p><strong>Compliance Tracking:</strong> Records, tallies, and displays taken vs. missed doses directly on the screen display.</p>
+            <p><strong>Refill Alert Mechanism:</strong> Tilts the pill box frame when medication runs empty, signaling the user to reload.</p>
 
             <!-- Footnote Link to GitHub -->
             <p class="github-footnote">
@@ -372,15 +367,10 @@
         <!-- Design Decisions -->
         <div class="section-block">
             <h2><span class="highlight">Design Decisions</span></h2>
-            <p>
-                My primary responsibilities included designing the inner rotor, drawer, outer cover, and optimizing sensor layout:
-            </p>
-            <ul>
-                <li><strong>Inner Rotor:</strong> Engineered with 15 individual compartments to hold up to two weeks of medication. Dimensioned slightly smaller than the outer shell to guarantee smooth rotation without binding or pill spilling.</li>
-                <li><strong>Drawer Mechanism:</strong> Features a rounded, curved interior floor for easy pill retrieval and hassle-free cleaning.</li>
-                <li><strong>Enclosure Cover:</strong> Built-in magnet slots allow quick detaching for refilling; fine-tuned 3D printing settings were used to achieve a clear, translucent finish.</li>
-                <li><strong>Sensor Placement:</strong> Touch and bumper sensors are mounted directly under the VEX Brain for convenient access, while the distance sensor faces outward from the drawer to monitor user departure.</li>
-            </ul>
+            <p><strong>Inner Rotor:</strong> Designed with 15 individual compartments to hold up to 14 doses of medication. Dimensioned slightly smaller than the outer shell to guarantee smooth rotation without pill spilling.</p>
+            <p><strong>Drawer Mechanism:</strong> Features a rounded, curved interior floor for easy pill retrieval and cleaning.</p>
+            <p><strong>Enclosure Cover:</strong> Built-in magnet slots allow quick detaching for refilling; fine-tuned 3D printing settings were used to achieve a clear, translucent finish.</p>
+            <p><strong>Sensor Placement:</strong> Touch and bumper sensors are mounted directly under the VEX Brain for convenient access, while the distance sensor faces outward from the drawer to monitor user’s distance.</p>
         </div>
 
         <!-- Action Videos -->
@@ -397,12 +387,10 @@
         <!-- Points of Improvement -->
         <div class="section-block">
             <h2><span class="highlight">Points of Improvement</span></h2>
-            <ul>
-                <li><strong>Time Input Restrictions:</strong> Interface code does not currently allow users to edit or re-enter reminder times if an error is made during setup.</li>
-                <li><strong>Sensor Multi-mapping:</strong> Mapping multiple functions to single sensors created mild usability confusion during user testing.</li>
-                <li><strong>Drawer Motion Profile:</strong> The drawer extends and retracts along a radial arc rather than a linear track, which proved less intuitive.</li>
-                <li><strong>Clear Optical Path:</strong> The distance sensor requires an unobstructed line-of-sight to correctly detect user departure and trigger drawer retraction.</li>
-            </ul>
+            <p><strong>Time Input Restrictions:</strong> Interface code does not currently allow users to edit or re-enter reminder times if an error is made during setup. </p>
+            <p><strong>Sensor Multi-mapping:</strong> Mapping multiple functions to single sensors created mild usability confusion during user testing.</p>
+            <p><strong>Drawer Motion Profile:</strong> The drawer extends and retracts along a radial arc rather than a linear track, which proved less intuitive.</p>
+            <p><strong>Clear Optical Path:</strong> The distance sensor requires an unobstructed line-of-sight to correctly detect user departure and trigger drawer retraction.</p>
         </div>
 
         <!-- Bottom Navigation -->

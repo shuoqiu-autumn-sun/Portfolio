@@ -265,7 +265,7 @@
         }
 
         .project-detail .section-block h2 .highlight {
-            color: var(--accent);
+            color: var(--blue);
         }
 
         .project-detail .section-block p {
@@ -351,8 +351,15 @@
         <div class="project-header">
             <div>
                 <h1>9V to 3.3V <span style="color: var(--accent);">LDO Regulator</span></h1>
-                <p class="subtitle">A linear voltage regulator board designed as an onboarding project for my school's robotics team.</p>
             </div>
+        </div>
+
+        <!-- Overview -->
+        <div class="section-block">
+            <h2><span class="highlight">Overview</span></h2>
+            <p>
+                This Low Dropout (LDO) regulator module was created as an onboarding design project for my school's robotics team. Built around the TLV76701 adjustable linear regulator, the board steps down an unregulated 9V input down to a stable 3.3V output to safely power low-voltage logic components and microcontrollers.
+            </p>
         </div>
 
         <!-- Hero Image -->
@@ -360,42 +367,30 @@
             <img src="Pictures/LDO/LDO_PCB_3D.png" alt="3D Render of 9V to 3.3V LDO Board" />
         </div>
 
-        <!-- Project Overview -->
-        <div class="section-block">
-            <h2><span class="highlight">Project Overview</span></h2>
-            <p>
-                This Low Dropout (LDO) regulator module was created as an onboarding design project for my school's robotics team. Built around the TLV76701 adjustable linear regulator, the board steps down an unregulated 9V input down to a stable 3.3V output (`+3V3`) to safely power low-voltage logic components and microcontrollers.
-            </p>
-        </div>
 
-        <!-- Schematic & Components -->
+        <!-- Schematic & Component Selection -->
         <div class="section-block">
-            <h2><span class="highlight">Component Selection</span></h2>
-            <p>
-                All component values and ratings were selected strictly according to datasheet recommendations to ensure operating stability:
-            </p>
-            <ul>
-                <li><strong>Capacitors:</strong> Multi-Layer Ceramic Capacitors (MLCC) with X7R dielectric for stable capacitance across variable temperatures.</li>
-                <li><strong>Resistors:</strong> Surface-mount thick film resistors used in the feedback network (`R1`, `R2`) to set the output voltage.</li>
-                <li><strong>Connectors:</strong> Terminal blocks (`J1`, `J2`) for robust wire connections at the 9V input and 3.3V output stages.</li>
-            </ul>
-
-            <!-- SCHEMATIC IMAGE (SLIGHTLY LARGER, NO OUTLINE) -->
+            <h2><span class="highlight">Schematic &amp; Component Selection</span></h2>
+            <!-- SCHEMATIC IMAGE -->
             <div class="img-container schematic-img">
                 <img src="Pictures/LDO/LDO_Schematic.png" alt="LDO Schematic Circuit Diagram" />
             </div>
+            <p>
+                All component values and ratings were selected strictly according to datasheet recommendations to ensure operating stability
+            </p>
+            <p><strong>Capacitors:</strong> Multi-Layer Ceramic Capacitors (MLCC) with X7R dielectric for stable capacitance across variable temperatures.</p>
+            <p><strong>Resistors (R1, R2):</strong> Surface-mount thick film resistors used in the feedback network to set the output voltage.</p>
+            <p><strong>Connectors (J1, J2):</strong> Terminal blocks for robust wire connections at the 9V input and 3.3V output stages.</p>
         </div>
 
         <!-- PCB Layout & Routing -->
         <div class="section-block">
             <h2><span class="highlight">PCB Layout &amp; Routing</span></h2>
             <p>
-                The layout was designed to handle heat dissipation and maintain signal integrity:
+                The layout was designed to handle heat dissipation and maintain signal integrity
             </p>
-            <ul>
-                <li><strong>Power &amp; Ground:</strong> Connected using large copper pours to lower trace resistance, support higher currents, and manage thermal dissipation.</li>
-                <li><strong>Signal Traces:</strong> Routed with standard 0.3 mm trace widths for feedback and enable signals.</li>
-            </ul>
+            <p><strong>Power &amp; Ground:</strong> Connected using large copper pours to lower trace resistance, support higher currents, and manage thermal dissipation.</p>
+            <p><strong>Signal Traces:</strong> Routed with standard 0.3 mm trace widths for feedback and enable signals.</p>
 
             <div class="bottom-image-grid">
                 <div class="grid-img-wrapper">

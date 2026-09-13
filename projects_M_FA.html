@@ -243,6 +243,7 @@
         }
 
         .section-block h2 {
+            color: var(--blue);
             font-size: 1.8rem;
             font-weight: 800;
             margin-bottom: 1rem;
@@ -253,7 +254,7 @@
         .section-block h3 {
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--blue);
+            color: var(--pink);
             margin: 1.5rem 0 0.8rem;
         }
 
@@ -350,25 +351,23 @@
 
         <!-- Header -->
         <div class="project-header">
-            <div class="project-tag">Mechanical · Robotics</div>
-            <h1>Fly Away: <span style="color: var(--blue);">3lb Combat Lifter</span></h1>
-            <p class="subtitle">A 3lb (beetleweight) control robot built for BotBrawl combat robotics competitions, utilizing a custom crank-and-rocker four-bar linkage mechanism.</p>
+            <h1>Fly Away: <span style="color: var(--accent);">3lb Combat Lifter</span></h1>
+        </div>
+
+        <!-- Overview -->
+        <div class="section-block">
+            <h2>Overview</h2>
+            <p>
+                Fly Away is one of WATBOTs’s (the University of Waterloo’s combat robotics team) 3lb robots, and it was both my starting project in the team and my co-op project.
+            </p>
+            <p>
+                In BotBrawl (Canada's robot fighting league), matches are judged on damage, control, and aggression. Fly Away was designed explicitly as a control bot. The core strategy for Fly Away is to gain control points by pinning opponents against walls with fork/wedge configuration or flipping them with a lifting mechanism.
+            </p>
         </div>
 
         <!-- HERO IMAGE -->
         <div class="image-placeholder hero-img">
             <img src="Pictures/FA/FA_Arena.jpeg" alt="Main Assembly CAD Render of Fly Away Version 2">
-        </div>
-
-        <!-- Motivation & Strategy -->
-        <div class="section-block">
-            <h2>Motivation &amp; Strategy</h2>
-            <p>
-                Joining the University of Waterloo BattleBots design team (WATBOT) provided a hands-on opportunity to execute a full mechanical hardware lifecycle under strict weight and space constraints.
-            </p>
-            <p>
-                In <strong>BotBrawl</strong> (Canada's robot fighting league), matches are judged on damage, control, and aggression. <em>Fly Away</em> was designed explicitly as a <strong>control bot</strong>. The core strategy is to dominate control points by pinning opponents against walls or stranding them, using an active lifting arm to neutralize their weapons and control ring position.
-            </p>
         </div>
 
         <!-- Design Iterations -->
@@ -393,15 +392,23 @@
                 </div>
             </div>
 
-            <ul>
-                <li><strong>Mechanism failure:</strong> Material deformation and improper component placement caused the spring to pull the entire flipper structure upward rather than releasing kinetic energy through the arm.</li>
-                <li><strong>Anime North 2026:</strong> Due to a tight 2-week manufacturing timeline, tolerance stack-up on the cam and over-stiff springs prevented proper deployment. The weapon was removed hours before the competition, converting the bot into a static wedge to gain driver experience.</li>
-            </ul>
+            <p>In the initial testing stage, a plastic model of the flipper was used with less stiff springs and a lighter load, which was misleading on how well the flipper would work once fully finished.</p>
+            <div class="image-grid video-grid">
+                <div class="video-wrapper">
+                    <video controls preload="metadata">
+                        <source src="Pictures/FA/FA_V1_Testing.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+
+            <p><strong>Mechanism failure:</strong> Material deformation and improper component placement caused the spring to pull the entire flipper structure upward rather than releasing kinetic energy through the arm.</p>
+            <p><strong>Anime North 2026:</strong> Due to a tight 2-week manufacturing timeline, tolerance stack-up on the cam and over-stiff springs prevented proper deployment. The weapon was removed hours before the competition, converting the bot into a static wedge to gain driver experience.</p>
 
             <!-- VERSION 2 -->
             <h3>Version 2: Crank-Rocker Linkage (Current)</h3>
             <p>
-                The design transitioned from a flipper to a high-torque <strong>crank-and-rocker four-bar linkage lifter</strong>. Linkage kinematic simulation software was used to tune arm ratios to maximize lifting height and mechanical advantage.
+                The design transitioned from a flipper to a crank-and-rocker four-bar linkage lifter. A linkage simulation software was used to tune arm ratios to maximize lifting height while keeping the flipper system a reasonable size.
             </p>
 
             <div class="image-grid v2-grid">
@@ -413,48 +420,46 @@
                 </div>
             </div>
 
-            <ul>
-                <li><strong>Modular Attachments:</strong> Implemented interchangeable front attachments: forks for vertical spinner opponents, and wedges for horizontal spinners to prevent weapon damage.</li>
-                <li><strong>Gear Reductions:</strong> Driven by a dedicated high-torque gear motor mated with a 1:2 spur gear reduction to clear internal chassis geometry.</li>
-                <li><strong>Drive &amp; Geometry:</strong> Shifted to rear-wheel drive with extended front caster wheels to prevent tipping forward when lifting 3lb opponents.</li>
-            </ul>
+            <p><strong>Modular Attachments:</strong> Implemented interchangeable front attachments – forks for vertical spinner opponents, and wedges for horizontal spinners to prevent weapon damage.</p>
+            <p><strong>Gear Reductions:</strong> Driven by a dedicated high-torque gear motor mated with a 1:2 spur gear reduction to prevent parts from hitting each other internally.</p>
+            <p><strong>Drive &amp; Geometry:</strong> Shifted to rear-wheel drive with extended front caster wheels to prevent tipping forward when lifting opponents.</p>
         </div>
 
         <!-- Material Selection & Fabrication -->
         <div class="section-block">
             <h2>Material Selection &amp; Architecture</h2>
             <p>
-                Materials were specifically chosen to balance severe weight constraints with structural impact resistance against high-speed spinning weapons:
+                Materials were specifically chosen to balance weight constraints with impact resistance against high-speed spinning weapons
             </p>
 
             <table class="materials-table">
                 <thead>
                     <tr>
-                        <th>Subsystem Component</th>
-                        <th>Material Selection</th>
-                        <th>Design Rationale</th>
+                        <th>Part Name</th>
+                        <th>Material</th>
+                        <th>Description</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>Outer Shell &amp; Wedges</td>
-                        <td><strong>TPU (Thermoplastic Polyurethane)</strong></td>
-                        <td>High impact absorption, flexibility, and crack resistance against weapon hits.</td>
+                        <td><strong>TPU</strong></td>
+                        <td>High impact absorption, flexibility, and crack resistance against weapon hits. Custamizable 3D print settings allowed for weight savings.</td>
                     </tr>
                     <tr>
                         <td>Bottom Plate</td>
-                        <td><strong>Carbon Fiber</strong></td>
+                        <td><strong>Carbon Fiber (1mm)</strong></td>
                         <td>Provides extreme rigidity and structural strength at minimal weight.</td>
                     </tr>
                     <tr>
                         <td>Top Plate</td>
-                        <td><strong>Tegris Woven Composite</strong></td>
+                        <td><strong>Tegris (1.4mm)</strong></td>
                         <td>Lightweight, highly impact-resistant armor protecting top electronics.</td>
                     </tr>
                     <tr>
                         <td>Flipper Uprights</td>
-                        <td><strong>UHMW Polyethylene</strong></td>
-                        <td>Slick, rigid material supporting high-stress arm pivot points.</td>
+                        <td><strong>UHMW (1/4 inches)</strong></td>
+                        <td>Rigid, lightweight material supporting high-stress arm pivot points.</td>
                     </tr>
                     <tr>
                         <td>Inner Supports &amp; Mounts</td>
@@ -463,13 +468,18 @@
                     </tr>
                     <tr>
                         <td>Arms &amp; Forks</td>
-                        <td><strong>Aluminum / AISI 304 Stainless</strong></td>
+                        <td><strong>6061 Aluminum (3/8 inches)</strong></td>
                         <td>High strength-to-weight ratio for primary load-bearing linkage arms.</td>
+                    </tr>
+                    <tr>
+                        <td>Fork Plate</td>
+                        <td><strong>AISI 304 Stainless Steel (1mm)</strong></td>
+                        <td>Good strength to weight ratio, worked well in both design iterations.</td>
                     </tr>
                     <tr>
                         <td>Wedge Plate</td>
                         <td><strong>Ti-6Al-4V Titanium</strong></td>
-                        <td>Exceptional hardness and strength-to-weight ratio to deflect low blades.</td>
+                        <td>Good strength-to-weight ratio to deflect low blades.</td>
                     </tr>
                 </tbody>
             </table>
@@ -481,11 +491,9 @@
             <p>
                 Competing at the <strong>BotBrawl Summer Classics</strong> validated the overall mechanical improvements, while exposing critical areas for future iteration:
             </p>
-            <ul>
-                <li><strong>Design for Serviceability (DFM/DFA):</strong> Version 1 required a hyper-specific teardown sequence. Version 2 reduced top-plate hardware by 66%, featured quick-snap side armor, and an independently removable lifter cassette.</li>
-                <li><strong>Wire Management:</strong> Embedded dedicated internal wire routing paths into CAD to prevent loose cables from snapping solder joints during high-G impacts.</li>
-                <li><strong>Identified Failure Modes:</strong> Lack of an inverted self-righting mechanism remains a vulnerability when flipped. Bluetooth latency via ESP32 control showed a need to transition to standard 2.4GHz RC protocols.</li>
-            </ul>
+            <p><strong>Design for Assembly (DFA):</strong> Version 1 required a very specific teardown sequence. Version 2 eliminated unnecessary top plate and side chassis fasteners, and had an independently removable lifter system.</p>
+            <p><strong>Wire Management:</strong> Planned wire routing paths ahead of time instead of blindly stuffing electronics into the robot to prevent loose solder joints/snapped wires during high impacts. Better wire management also allows for easier repairs between matches. </p>
+            <p><strong>Identified Failure Modes:</strong> Lack of an inverted self-righting mechanism remains a vulnerability when being tossed around. Radio control should be implemented since it does not have latency issues, unlike Bluetooth control. </p>
         </div>
 
         <!-- Action Videos -->

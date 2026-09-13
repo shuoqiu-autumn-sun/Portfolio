@@ -125,7 +125,7 @@
 
         .project-tag {
             display: inline-block;
-            background: var(--accent);
+            background: var(--blue);
             color: #fff;
             font-size: 0.75rem;
             font-weight: 700;
@@ -238,6 +238,7 @@
         }
 
         .section-block h2 {
+            color: var(--blue);
             font-size: 1.8rem;
             font-weight: 800;
             margin-bottom: 1rem;
@@ -248,7 +249,7 @@
         .section-block h3 {
             font-size: 1.3rem;
             font-weight: 700;
-            color: var(--blue);
+            color: var(--pink);
             margin: 1.5rem 0 0.8rem;
         }
 
@@ -333,19 +334,30 @@
             <h1>48V-12V <span style="color: var(--accent);">Buck Converter</span></h1>
         </div>
 
-        <!-- ONE SENTENCE DESCRIPTION BEFORE HERO IMAGE -->
-        <p class="subtitle">A DC-DC step-down buck converter board designed to convert a 48V input down to a stable 12V output rail for high-power system components.</p>
+        <!-- Overview -->
+        <div class="section-block">
+            <h2><span class="highlight">Overview</span></h2>
+            <p>
+                Since I am still fairly new to PCB design, the project description is formatted as a Q&amp;A to document the questions I had while reviewing the datasheet, selecting components, and completing the layout.
+            </p>
+        </div>
 
+    
         <!-- HERO IMAGE -->
         <div class="image-placeholder hero-img">
             <img src="Pictures/48V-12V Buck/Buck_3D.png" alt="3D image">
         </div>
 
-        <p class="intro-text">Since I am still fairly new to PCB design, the project description is formatted as a Q&amp;A to document the questions I had while reviewing the datasheet, selecting components, and completing the layout.</p>
 
         <!-- Schematic and Component Selection -->
         <div class="section-block">
             <h2>Schematic and Component Selection</h2>
+
+            <!-- SCHEMATIC -->
+            <div class="img-container schematic-img">
+                <img src="Pictures/48V-12V Buck/48-12V Buck Converter Schematic.png" alt="Buck Converter Schematic Diagram" />
+            </div>
+
             <p>The TI TPSM65630 (P65630SVCGR) was selected because its operating parameters match the target input voltage range.</p>
 
             <div class="qa-item">
@@ -424,11 +436,6 @@
 
             <p>Resistor power ratings were selected with a 2x safety margin over expected power dissipation.</p>
             <p>While the PGOOD pin typically interfaces with an external microcontroller, an onboard MOSFET-driven LED indicator circuit was added to provide visual status indication for standalone operation.</p>
-
-            <!-- SCHEMATIC -->
-            <div class="img-container schematic-img">
-                <img src="Pictures/48V-12V Buck/48-12V Buck Converter Schematic.png" alt="Buck Converter Schematic Diagram" />
-            </div>
         </div>
 
         <!-- PCB Layout and Routing -->
@@ -449,9 +456,11 @@
 
             <div class="qa-item">
                 <p class="question">If wider traces lower resistance and inductance, why not make all traces wide?</p>
-                <p>Trace width is selected based on current capacity, allowable temperature rise, voltage drop, and impedance requirements.</p>
-                <p>Extending copper pours to every trace introduces unnecessary parasitic capacitance, which negatively affects high-speed signal integrity.</p>
-                <p>For power and ground planes, inter-plane parasitic capacitance acts as a distributed high-frequency decoupling capacitor that stabilizes supply rails. However, on signal traces, excess capacitance forces signal drivers to charge and discharge larger parasitic loads, slowing edge transitions and degrading signal quality.</p>
+                <ul>
+                    <li>Trace width is selected based on current capacity, allowable temperature rise, voltage drop, and impedance requirements.</li>
+                    <li>Extending copper pours to every trace introduces unnecessary parasitic capacitance, which negatively affects high-speed signal integrity.</li>
+                    <li>For power and ground planes, inter-plane parasitic capacitance acts as a distributed high-frequency decoupling capacitor that stabilizes supply rails. However, on signal traces, excess capacitance forces signal drivers to charge and discharge larger parasitic loads, slowing edge transitions and degrading signal quality.</li>
+                </ul>
             </div>
 
             <!-- LAST 3 IMAGES SIDE-BY-SIDE -->

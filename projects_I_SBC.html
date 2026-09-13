@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Self-Balancing Car | Autumn Sun</title>
+    <title>Self-Balancing Robot | Autumn Sun</title>
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -287,7 +287,14 @@
         }
 
         .project-detail .section-block h2 .highlight {
-            color: var(--accent);
+            color: var(--blue);
+        }
+
+        .section-block h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--pink);
+            margin: 1.5rem 0 0.8rem;
         }
 
         .project-detail .section-block p {
@@ -372,34 +379,31 @@
         <!-- Project Header -->
         <div class="project-header">
             <div>
-                <h1>Self-Balancing <span style="color: var(--accent);">Car</span></h1>
-                <p class="subtitle">A two-wheel self-balancing robot built to explore PID control systems and basic mechanical design.</p>
+                <h1>Self-Balancing <span style="color: var(--accent);">Robot</span></h1>
             </div>
         </div>
 
+        <!-- Overview -->
+        <div class="section-block">
+            <h2><span class="highlight">Overview</span></h2>
+            <p>
+                During the Waterloo Senior Engineering Competition, my team built a beam-balancing robot using an Arduino Uno, L298N motor driver, and MPU6050 gyroscope. Due to limited programming experience at the time, our implementation relied heavily on empirical tuning rather than automated control. This inspired a teammate and me to design our own self-balancing robot.
+            </p>
+        </div>
+        
         <!-- Hero Image -->
         <div class="project-image-large">
-            <img src="Pictures/SBC/SBC_Front.jpg" alt="Self-Balancing Car Prototype" />
-        </div>
-
-        <!-- Motivation -->
-        <div class="section-block">
-            <h2><span class="highlight">Motivation</span></h2>
-            <p>
-                During the Waterloo Senior Engineering Competition, my team built a beam-balancing robot using an Arduino Uno, L298N motor driver, and MPU6050 gyroscope. Due to limited programming experience at the time, our implementation relied heavily on empirical tuning rather than closed-loop automated control. This inspired a teammate and me to design our own self-balancing robot.
-            </p>
+            <img src="Pictures/SBC/SBC_Front.jpg" alt="Self-Balancing Robot Prototype" />
         </div>
 
         <!-- Component Selection -->
         <div class="section-block">
             <h2><span class="highlight">Component Selection</span></h2>
-            <ul>
-                <li><strong>Arduino Uno:</strong> central microcontroller, simple to use and has an extensive ecosystem</li>
-                <li><strong>L298N Motor Driver:</strong> allows bi-directional control, simple to wire and implement</li>
-                <li><strong>MPU6050 Gyroscope &amp; Accelerometer:</strong> measures vehicle tilt and orientation in real time to feed the balancing algorithm</li>
-                <li><strong>DC Gear Motors (×2):</strong> easily wired and very accessible</li>
-                <li><strong>7.4V Li-ion Battery:</strong> rechargeable and provided sufficient power to the entire system</li>
-            </ul>
+            <p><strong>Arduino Uno:</strong> Central microcontroller, simple to use and has an extensive ecosystem.</p>
+            <p><strong>L298N Motor Driver:</strong> Allows bi-directional control, simple to wire and implement.</p>
+            <p><strong>MPU6050 Gyroscope &amp; Accelerometer:</strong>  Measures vehicle tilt and orientation in real time to feed the balancing algorithm.</p>
+            <p><strong>DC Gear Motors (×2):</strong> Easily wired and very accessible.</p>
+            <p><strong>7.4V Li-ion Battery:</strong> Rechargeable and provided sufficient power to the entire system.</p>
             <p>
                 As we were building foundational skills, component selection prioritized well-documented hardware with reliable community resources to ensure smooth troubleshooting during system integration.
             </p>
@@ -408,9 +412,9 @@
         <!-- Design Iterations -->
         <div class="section-block">
             <h2><span class="highlight">Design Iterations</span></h2>
-            <p><strong>Version 1:</strong></p>
+            <h3>Version 1</h3>
             <p>
-                To maximize stability, the initial structure aimed for a low center of mass, placing heavy elements like the battery near the base while keeping processing electronicson top. The base used perpendicular snap-fit beams to lock the battery in place, while four 3D-printed columns supported the top tier as a fun aesthetic challenge.
+                To maximize stability, the initial structure aimed for a low center of mass, placing heavy elements like the battery near the base while keeping processing electronics on top. The base used perpendicular snap-fit beams to lock the battery in place, while four 3D-printed columns supported the top tier as a fun aesthetic challenge.
             </p>
             
             <!-- SIDE-BY-SIDE GRID WITH RESIZED SNAP LOCK WRAPPER -->
@@ -424,21 +428,18 @@
             </div>
 
             <p>
-                I designed the primary locking mechanism for the battery, incorporating a vertical beam with a central alignment slot for the other horizontal beam to pass through. To address stress concentrations during assembly, I added fillets to the slot joints and chamfered the baseplate mounting holes for smoother component insertion.
+                I designed the battery housing, which included a horizontal beam with a central alignment slot for the other vertical beam to pass through. To address stress concentrations during assembly, I added fillets to the slot joints and chamfered the baseplate mounting holes for smoother component insertion.
             </p>
 
-            <p><strong>Version 2:</strong></p>
-
+            <h3>Version 2</h3>
             <p>
-                Hands-on testing highlighted key areas for improvement, leading to a second-generation design focused on structural stability and practical assembly:
+                Hands-on testing highlighted key areas for improvement, leading to a second-generation design focused on structural stability and practical assembly
             </p>
-            <ul>
-                <li><strong>Aspect Ratio &amp; Stability:</strong> The original square layout had a narrow stability margin that caused rapid tipping. Transitioning to a wider rectangular footprint significantly increased reaction time and self-righting capability.</li>
-                <li><strong>Optimal Gyro Placement:</strong> The revised three-tier structure places the MPU6050 along the center-of-mass axis at the top, delivering cleaner sensor data to the controller than off-center mounting.</li>
-                <li><strong>Reliable Mounting:</strong> The 3D-printed snap locks were prone to plastic deformation and snapping over time. Replacing them with zip-tie friction mounts simplified tolerances while providing a secure, repeatable hold.</li>
-                <li><strong>Standardized Hardware:</strong> Fasteners were upgraded from printed pins to off-the-shelf screws and nuts, eliminating tight print-tolerance constraints.</li>
-                <li><strong>Custom Aesthetic Covers:</strong> Transparent filament was used to print wave-patterned side panels, giving the chassis a polished appearance while protecting internal wiring.</li>
-            </ul>
+            <p><strong>Aspect Ratio &amp; Stability:</strong> The original square layout had a narrow stability margin that caused rapid tipping. The new version is more rectangular, which allows for more reaction time, increasing the capability to self-right. </p>
+            <p><strong>Optimal Gyro Placement:</strong> The revised three-tier structure places the MPU6050 along the center-of-mass axis at the top, delivering cleaner sensor data to the controller than off-centre mounting.</p>
+            <p><strong>Reliable Mounting:</strong> The 3D-printed snap locks for the battery were prone to deformation and snapping over time. Replacing them with zip-tie friction mounts simplified tolerances while providing a secure, repeatable hold.</p>
+            <p><strong>Standardized Hardware:</strong> Fasteners were upgraded from printed pins to off-the-shelf screws and nuts, eliminating printing tolerance constraints.</p>
+            <p><strong>Custom Aesthetic Covers:</strong> Extra precautions in case the electronics fell out.</p>
 
             <div class="img-container">
                 <img src="Pictures/SBC/SBC_V2_CAD.png" alt="Version 2 CAD Model Details" />
