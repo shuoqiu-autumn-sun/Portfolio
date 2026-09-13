@@ -332,7 +332,7 @@
             <p><strong>100nF Capacitor 0402 (C8-C12, C14):</strong></p>
             <ul>
                 <li><strong>C8-C12:</strong> Local decoupling capacitors suppressing high-frequency switching noise at VDD.</li>
-                <li><strong>C14:</strong> NRST line noise filtering and reset signal stabilization.</li>
+                <li><strong>C14:</strong> NRST (used to restart MCU or hold it in a restart state)line noise filtering and reset signal stabilization.</li>
             </ul>
 
             <p><strong>Red LED 0402 (D2):</strong> Visual indicator for firmware status and debugging.</p>
@@ -341,6 +341,9 @@
             <p><strong>1kOhm Resistor 0402 (R5):</strong> Limits current through MCU status LED to safe levels.</p>
             <p><strong>0kOhm Resistor 0402 (R2):</strong> For oscillator debugging or trace impedance tuning.</p>
             <p><strong>2.2kOhm Resistor 0402 (R3-R4):</strong> I²C pull-up resistors defining logic-high levels on SDA and SCL.</p>
+            <ul>
+                <li>I²C (Inter-Integrated Circuit): communication protocol that uses 2 bi-directional lines SDA (Serial Data Line) and SCL (Serial Clock Line), one for transmitting data and one for clock signal to synchronize data transfer. </li>
+            </ul>
 
             <p><strong>10kOhm Resistor 0402 (R6-R7):</strong></p>
             <ul>
@@ -349,6 +352,10 @@
             </ul>
 
             <p><strong>24MHz Crystal (X1):</strong> Provides accurate external clock for STM32 system timing.</p>
+            <ul>
+                <li>Crystals, specifically quartz, are used in electronics through the piezoelectric effect. When pressure is applied to the crystal, it generates a tiny electrical voltage. Using this idea in reverse, a small piece of crystal is put into a crystal oscillator; when electricity passes through, the crystal vibrates at a precise and stable frequency. The circuit counts these vibrations to keep perfect time. </li>
+            </ul>
+
 
             <h3>USB Connector and LDO Regulator (+5V to +3V3)</h3>
             <div class="img-container">
